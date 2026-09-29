@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Mono, Newsreader } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { site } from "@/lib/site";
+import { getSite } from "@/lib/cms/site";
 import "./globals.css";
 
 const newsreader = Newsreader({
@@ -16,13 +16,16 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: "400",
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: `${site.name} — ${site.role}`,
-    template: `%s — ${site.name}`,
-  },
-  description: site.tagline,
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const site = await getSite();
+  return {
+    title: {
+      default: `${site.name} — ${site.role}`,
+      template: `%s — ${site.name}`,
+    },
+    description: site.tagline,
+  };
+}
 
 function themeScript() {
   return `(function(){try{var s=localStorage.getItem("theme");var d=s?s==="dark":true;var r=document.documentElement;r.classList.toggle("dark",d);r.style.colorScheme=d?"dark":"light";}catch(e){}})();`;

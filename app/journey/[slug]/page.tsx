@@ -2,11 +2,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Article } from "@/components/article";
-import { journeyEntries, getJourneyEntry } from "@/lib/content";
-import { formatDate } from "@/lib/site";
+import { getJourneyEntries, getJourneyEntryBySlug } from "@/lib/cms/journey";
+import { getPageSettings } from "@/lib/cms/pages";
+import { formatDate, renderMeta } from "@/lib/cms/format";
 
-export function generateStaticParams() {
-  return journeyEntries.map((entry) => ({ slug: entry.slug }));
+export async function generateStaticParams() {
+  const entries = await getJourneyEntries();
+  return entries.map((entry) => ({ slug: entry.slug }));
 }
 
 export async function generateMetadata({
@@ -15,7 +17,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const entry = getJourneyEntry(slug);
+  const entry = await getJourneyEntryBySlug(slug);
   return entry ? { title: entry.title, description: entry.excerpt } : {};
 }
 
@@ -25,25 +27,29 @@ export default async function JourneyPostPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const entry = getJourneyEntry(slug);
+  const [entry, page] = await Promise.all([getJourneyEntryBySlug(slug), getPageSettings("journey")]);
 
   if (!entry) {
     notFound();
   }
 
+  const meta = renderMeta(page.detailMetaFormat, {
+    date: formatDate(entry.date),
+    readMinutes: entry.readMinutes,
+    title: entry.title,
+  });
+
   return (
     <article className="mx-auto w-full max-w-3xl px-6 py-16 sm:py-20">
       <Link
-        href="/journey"
+        href={page.backHref || "/journey"}
         className="text-[15px] opacity-60 transition-opacity hover:opacity-100 hover:underline underline-offset-4"
       >
-        ← back to the journal
+        {page.backLabel}
       </Link>
 
       <div className="mt-10 max-w-xl">
-        <p className="font-mono text-sm opacity-60">
-          {formatDate(entry.date)} · {entry.readMinutes} min read
-        </p>
+        {meta ? <p className="font-mono text-sm opacity-60">{meta}</p> : null}
         <h1 className="mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
           {entry.title}
         </h1>
@@ -55,10 +61,10 @@ export default async function JourneyPostPage({
 
       <div className="mt-16 border-t border-black pt-8 dark:border-white">
         <Link
-          href="/journey"
+          href={page.backHref || "/journey"}
           className="text-[15px] opacity-60 transition-opacity hover:opacity-100 hover:underline underline-offset-4"
         >
-          ← all entries
+          {page.allLabel}
         </Link>
       </div>
     </article>

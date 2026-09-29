@@ -2,14 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { nav } from "@/lib/site";
+import type { NavItem } from "@/lib/cms/types";
 
-export function NavLinks() {
+export function NavLinks({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
 
   return (
     <nav className="flex items-center gap-5 sm:gap-7">
-      {nav.map((item) => {
+      {items.map((item) => {
         const active = pathname === item.href;
         return (
           <Link

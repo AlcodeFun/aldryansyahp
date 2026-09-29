@@ -1,4 +1,4 @@
-import type { Block } from "@/lib/content";
+import type { Block } from "@/lib/blocks";
 
 export function Article({ blocks }: { blocks: Block[] }) {
   return (

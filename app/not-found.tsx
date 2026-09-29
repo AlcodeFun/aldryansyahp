@@ -1,22 +1,30 @@
 import Link from "next/link";
+import { getPageSettings } from "@/lib/cms/pages";
+import { getStrings } from "@/lib/cms/site";
 
-export default function NotFound() {
+export default async function NotFound() {
+  const [page, strings] = await Promise.all([
+    getPageSettings("not_found"),
+    getStrings(),
+  ]);
+
   return (
     <div className="mx-auto w-full max-w-3xl px-6 py-28 text-center sm:py-40">
-      <span className="font-mono text-sm opacity-60">404</span>
+      <span className="font-mono text-sm opacity-60">
+        {strings["notfound.code"] ?? "404"}
+      </span>
       <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-        This page is missing from the archive.
+        {page.heading}
       </h1>
       <p className="mx-auto mt-6 max-w-md text-lg leading-relaxed text-black/70 dark:text-white/70">
-        It may have been removed, or the address was written down wrong. Either
-        way, the rest of the site is still here.
+        {page.intro}
       </p>
       <p className="mt-10">
         <Link
-          href="/"
+          href={page.backHref || "/"}
           className="text-lg underline decoration-1 underline-offset-4 hover:opacity-70"
         >
-          ← back home
+          {page.backLabel}
         </Link>
       </p>
     </div>
