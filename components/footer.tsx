@@ -6,8 +6,8 @@ export async function Footer() {
 
   return (
     <footer className="raw px-5 pb-8 pt-16 text-[var(--muted)]">
-      <hr className="mb-3 max-w-[60ch]" />
-      <p className="max-w-[60ch]">
+      <hr className="mb-3 mx-auto max-w-[60ch]" />
+      <p className="mx-auto max-w-[60ch]">
         {site.name}, {new Date().getFullYear()}.{" "}
         <Link href={strings["home.random_notes_href"] ?? "/random"}>
           {strings["footer.random_notes_link"] ?? "notes"}

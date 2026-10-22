@@ -30,8 +30,8 @@ export const navItems = [
 export const homeHero = {
   updatedLabel: "updated",
   lineOne: "Coding all day till eyes go dry",
-  greeting: "I'm",
-  experiencePrefix: "2+ years as a",
+  greeting: "Hello, I am",
+  experiencePrefix: "a 2+ years experienced",
 };
 
 export const homeSections = [

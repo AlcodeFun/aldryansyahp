@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-/** The one page frame every public route uses: left-aligned, ~60 characters wide. */
+/** The one page frame every public route uses: centred, ~60 characters wide. */
 export function Page({
   children,
   as: Tag = "div",
@@ -8,7 +8,7 @@ export function Page({
   children: React.ReactNode;
   as?: "div" | "article";
 }) {
-  return <Tag className="raw max-w-[60ch] break-words px-5 py-10">{children}</Tag>;
+  return <Tag className="raw mx-auto max-w-[60ch] break-words px-5 py-10">{children}</Tag>;
 }
 
 export function PageTitle({ title, intro }: { title: string; intro?: string }) {
