@@ -42,8 +42,8 @@ export default async function JourneyPostPage({
   return (
     <Page as="article">
       <BackLink href={page.backHref || "/journey"} label={page.backLabel} />
-      <h1 className="mt-6 text-[2rem] font-bold leading-tight">{entry.title}</h1>
-      {meta ? <p className="font-mono text-[15px]">{meta}</p> : null}
+      <h1 className="mt-6 text-[2.6rem]">{entry.title}</h1>
+      {meta ? <p className="mt-2 text-[16px] text-[var(--muted)]">{meta}</p> : null}
       <hr className="my-6" />
       <Article blocks={entry.content} />
       <hr className="my-6" />

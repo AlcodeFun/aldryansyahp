@@ -9,7 +9,7 @@ export function Article({ blocks }: { blocks: Block[] }) {
             return <p key={i}>{block.text}</p>;
           case "h2":
             return (
-              <h2 key={i} className="pt-4 text-[1.4rem] font-bold">
+              <h2 key={i} className="pt-4 text-[1.6rem]">
                 {block.text}
               </h2>
             );

@@ -44,8 +44,8 @@ export default async function RandomNotePage({
   return (
     <Page as="article">
       <BackLink href={page.backHref || "/random"} label={page.backLabel} />
-      <h1 className="mt-6 text-[2rem] font-bold leading-tight">{note.title}</h1>
-      {meta ? <p className="font-mono text-[15px]">{meta}</p> : null}
+      <h1 className="mt-6 text-[2.6rem]">{note.title}</h1>
+      {meta ? <p className="mt-2 text-[16px] text-[var(--muted)]">{meta}</p> : null}
       <hr className="my-6" />
       <Article blocks={note.content} />
       <hr className="my-6" />

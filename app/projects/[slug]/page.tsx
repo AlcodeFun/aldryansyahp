@@ -47,10 +47,10 @@ export default async function ProjectPage({
   return (
     <Page as="article">
       <BackLink href={page.backHref || "/projects"} label={page.backLabel} />
-      <h1 className="mt-6 text-[2rem] font-bold leading-tight">{project.title}</h1>
-      {meta ? <p className="font-mono text-[15px]">{meta}</p> : null}
+      <h1 className="mt-6 text-[2.6rem]">{project.title}</h1>
+      {meta ? <p className="mt-2 text-[16px] text-[var(--muted)]">{meta}</p> : null}
       {project.repoUrl ? (
-        <p className="mt-2 font-mono text-[15px]">
+        <p className="mt-1">
           source: <a href={project.repoUrl}>{project.repoUrl.replace(/^https?:\/\//, "")}</a>
         </p>
       ) : null}

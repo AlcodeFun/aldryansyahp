@@ -56,7 +56,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
 
   return (
     <section aria-labelledby="gallery-heading" className="mt-8">
-      <h2 id="gallery-heading" className="text-[1.4rem] font-bold">
+      <h2 id="gallery-heading" className="text-[1.6rem]">
         Screenshots
       </h2>
 
@@ -67,7 +67,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               type="button"
               onClick={() => setActive(i)}
               aria-label={`Open image ${i + 1} of ${images.length}: ${image.alt}`}
-              className="block w-full cursor-zoom-in border border-[var(--ink)]"
+              className="block w-full cursor-zoom-in sketch overflow-hidden"
             >
               <div className="relative aspect-[4/3] w-full">
                 <Image
@@ -81,7 +81,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               </div>
             </button>
             {image.caption ? (
-              <p className="mt-1 font-mono text-[13px]">
+              <p className="mt-1 text-[16px] text-[var(--muted)]">
                 fig. {i + 1}: {image.caption}
               </p>
             ) : null}
@@ -110,7 +110,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
         className="m-0 h-full max-h-full w-full max-w-full border-0 bg-black p-0 text-white backdrop:bg-black"
       >
         {current ? (
-          <div className="flex h-full flex-col font-mono text-[15px]">
+          <div className="flex h-full flex-col">
             <div className="flex shrink-0 gap-4 px-4 py-2">
               <span>
                 {(active ?? 0) + 1}/{images.length}

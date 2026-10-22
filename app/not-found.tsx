@@ -11,9 +11,9 @@ export default async function NotFound() {
 
   return (
     <Page>
-      <p className="font-mono">{strings["notfound.code"] ?? "404"}</p>
+      <p className="text-[var(--muted)]">{strings["notfound.code"] ?? "404"}</p>
       <PageTitle title={page.heading} intro={page.intro} />
-      <p className="mt-6 font-mono text-[15px]">
+      <p className="mt-6">
         <Link href={page.backHref || "/"}>{page.backLabel}</Link>
       </p>
     </Page>

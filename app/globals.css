@@ -2,60 +2,87 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* System fonts only. No webfont download, nothing to tune. */
 @theme inline {
-  --font-sans: "Times New Roman", Times, serif;
-  --font-serif: "Times New Roman", Times, serif;
+  --font-sans: var(--font-hand), "Comic Sans MS", cursive;
+  --font-serif: var(--font-hand), "Comic Sans MS", cursive;
   --font-mono: ui-monospace, Menlo, Consolas, "Courier New", monospace;
 }
 
 :root {
   color-scheme: light;
-  --paper: #fff;
-  --ink: #000;
-  --link: #0000ee;
-  --visited: #551a8b;
+  --paper: #fafafa;
+  --ink: #111;
+  --muted: #4b5563;
+  --card: #fffef0;
+  --mark: #ffe58a;
 }
 
 .dark {
   color-scheme: dark;
-  --paper: #111;
-  --ink: #ddd;
-  --link: #8ab4ff;
-  --visited: #c58af9;
+  --paper: #1a1a1a;
+  --ink: #eee;
+  --muted: #b5b5b5;
+  --card: #26251f;
+  --mark: #6b5a12;
 }
 
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-serif);
-  font-size: 18px;
-  line-height: 1.5;
+  font-family: var(--font-sans);
+  font-size: 20px;
+  line-height: 1.6;
 }
 
 ::selection {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--mark);
+  color: var(--ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 2px;
+  outline: 2px dashed var(--ink);
+  outline-offset: 3px;
 }
 
-/* Plain links, the way browsers drew them before anyone styled them. */
-.raw a {
-  color: var(--link);
-  text-decoration: underline;
+/* Everything reads like a notebook: lowercase headings, ink-coloured links
+   with a highlighter swipe on hover. */
+.raw h1,
+.raw h2 {
+  text-transform: lowercase;
+  line-height: 1.15;
 }
-.raw a:visited {
-  color: var(--visited);
+.raw a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
 }
 .raw a:hover {
-  background: var(--link);
-  color: var(--paper);
+  background: var(--mark);
 }
 .raw hr {
   border: 0;
-  border-top: 1px solid var(--ink);
+  border-top: 2px solid var(--ink);
+  border-radius: 100% 0 100% 0 / 2px;
+}
+
+/* A hand-drawn box: uneven corner radii make the border wobble. */
+.sketch {
+  background: var(--card);
+  border: 2px solid var(--ink);
+  border-radius: 255px 15px 225px 15px / 15px 225px 15px 255px;
+}
+.sketch:nth-of-type(odd) {
+  transform: rotate(-0.6deg);
+}
+.sketch:nth-of-type(even) {
+  transform: rotate(0.5deg);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .sketch-hover {
+    transition: transform 0.15s;
+  }
+  .sketch-hover:hover {
+    transform: rotate(0deg) translateY(-2px);
+  }
 }

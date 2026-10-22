@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-/** The one page frame every public route uses: left-aligned, ~72 characters wide. */
+/** The one page frame every public route uses: left-aligned, ~60 characters wide. */
 export function Page({
   children,
   as: Tag = "div",
@@ -8,14 +8,14 @@ export function Page({
   children: React.ReactNode;
   as?: "div" | "article";
 }) {
-  return <Tag className="raw max-w-[72ch] break-words px-4 py-8">{children}</Tag>;
+  return <Tag className="raw max-w-[60ch] break-words px-5 py-10">{children}</Tag>;
 }
 
 export function PageTitle({ title, intro }: { title: string; intro?: string }) {
   return (
     <>
-      <h1 className="text-[2rem] font-bold leading-tight">{title}</h1>
-      {intro ? <p className="mt-2">{intro}</p> : null}
+      <h1 className="text-[2.6rem]">{title}</h1>
+      {intro ? <p className="mt-4 text-[var(--muted)]">{intro}</p> : null}
     </>
   );
 }
@@ -27,12 +27,14 @@ export function IndexList({
   rows: { key: string; href: string; meta?: string; title: string; text?: string }[];
 }) {
   return (
-    <ul className="mt-8 space-y-4">
+    <ul className="mt-10 space-y-6">
       {rows.map((row) => (
-        <li key={row.key}>
-          {row.meta ? <span className="font-mono text-[15px]">{row.meta} </span> : null}
-          <Link href={row.href}>{row.title}</Link>
-          {row.text ? <span> — {row.text}</span> : null}
+        <li key={row.key} className="sketch sketch-hover px-6 py-5">
+          {row.meta ? <p className="text-[16px] text-[var(--muted)]">{row.meta}</p> : null}
+          <Link href={row.href} className="text-[1.4rem]">
+            {row.title}
+          </Link>
+          {row.text ? <p className="mt-1 text-[var(--muted)]">{row.text}</p> : null}
         </li>
       ))}
     </ul>
@@ -41,7 +43,7 @@ export function IndexList({
 
 export function BackLink({ href, label }: { href: string; label: string }) {
   return (
-    <p className="font-mono text-[15px]">
+    <p>
       <Link href={href}>{label}</Link>
     </p>
   );

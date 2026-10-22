@@ -11,9 +11,9 @@ function Section({
   children: React.ReactNode;
 }) {
   return (
-    <section className="mt-10">
-      <h2 className="text-[1.4rem] font-bold">{title}</h2>
-      <div className="mt-2">{children}</div>
+    <section className="sketch mt-12 px-7 py-6 sm:px-10 sm:py-8">
+      <h2 className="text-[1.6rem]">{title}</h2>
+      <div className="mt-3 text-[var(--muted)]">{children}</div>
     </section>
   );
 }
@@ -23,9 +23,9 @@ function EducationList({ entries }: { entries: EducationEntry[] }) {
     <ul className="space-y-3">
       {entries.map((item) => (
         <li key={item.id}>
-          <b>{item.degree}</b>, {item.school}
+          <span className="text-[var(--ink)]">{item.degree}</span>, {item.school}
           <br />
-          <span className="font-mono text-[15px]">
+          <span className="text-[16px]">
             {item.period}
             {item.gpa ? ` / GPA ${item.gpa}` : ""}
             {item.predicate ? ` (${item.predicate})` : ""}
@@ -38,7 +38,7 @@ function EducationList({ entries }: { entries: EducationEntry[] }) {
 
 // A plain comma list. These are words, not buttons.
 function TechList({ items }: { items: TechItem[] }) {
-  return <p className="font-mono text-[15px]">{items.map((item) => item.label).join(", ")}</p>;
+  return <p>{items.map((item) => item.label).join(", ")}</p>;
 }
 
 function Contact({
@@ -57,7 +57,7 @@ function Contact({
   ].filter((row) => row !== null);
 
   return (
-    <table className="font-mono text-[15px]">
+    <table>
       <tbody>
         {rows.map((row) => (
           <tr key={row.label}>
@@ -102,12 +102,12 @@ export default async function Home() {
 
   return (
     <Page>
-      <h1 className="text-[2.25rem] font-bold leading-tight">{site.name}</h1>
-      <p className="mt-1">
+      <h1 className="text-[2.6rem]">{site.name}</h1>
+      <p className="mt-8 text-[1.3rem] text-[var(--muted)]">
         {hero.greeting} {site.nickname}. {hero.experiencePrefix} {site.role}.
       </p>
-      <p className="mt-1 italic">{hero.lineOne}.</p>
-      <p className="mt-1 font-mono text-[15px]">
+      <p className="mt-1 text-[1.3rem] text-[var(--muted)]">{hero.lineOne}.</p>
+      <p className="mt-2 text-[16px] text-[var(--muted)]">
         {hero.updatedLabel || strings["home.last_updated_prefix"]}{" "}
         {new Date().getFullYear()}
       </p>

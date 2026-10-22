@@ -1,8 +1,15 @@
 import type { Metadata } from "next";
+import { Patrick_Hand } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { getSite } from "@/lib/cms/site";
 import "./globals.css";
+
+const hand = Patrick_Hand({
+  variable: "--font-hand",
+  subsets: ["latin"],
+  weight: "400",
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSite();
@@ -26,14 +33,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={hand.variable} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript() }} />
       </head>
       <body className="flex min-h-screen flex-col">
         <a
           href="#content"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:bg-[var(--ink)] focus:px-2 focus:text-[var(--paper)]"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:bg-[var(--card)] focus:px-2"
         >
           skip to content
         </a>
