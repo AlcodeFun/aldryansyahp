@@ -104,9 +104,13 @@ export default async function Home() {
     <Page>
       <h1 className="text-[2.6rem]">{site.name}</h1>
       <p className="mt-8 text-[1.3rem] text-[var(--muted)]">
-        {hero.greeting} {site.nickname}. {hero.experiencePrefix} {site.role}.
+        {hero.lineOne},
+        <br />
+        {hero.greeting} {site.nickname}.
       </p>
-      <p className="mt-4 text-[1.3rem] text-[var(--muted)]">{hero.lineOne}.</p>
+      <p className="mt-4 text-[1.3rem] text-[var(--muted)]">
+        {hero.experiencePrefix} {site.role}.
+      </p>
       <p className="mt-2 text-[16px] text-[var(--muted)]">
         {hero.updatedLabel || strings["home.last_updated_prefix"]}{" "}
         {new Date().getFullYear()}

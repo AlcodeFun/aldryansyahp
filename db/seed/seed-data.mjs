@@ -30,7 +30,7 @@ export const navItems = [
 export const homeHero = {
   updatedLabel: "updated",
   lineOne: "Coding all day till eyes go dry",
-  greeting: "Hello, I am",
+  greeting: "Hello, I'm",
   experiencePrefix: "a 2+ years experienced",
 };
 
