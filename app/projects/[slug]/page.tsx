@@ -1,8 +1,7 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Article } from "@/components/article";
-import { GithubIcon } from "@/components/icons";
+import { BackLink, Page } from "@/components/page";
 import { ProjectGallery } from "@/components/project-gallery";
 import { getProjects, getProjectBySlug } from "@/lib/cms/projects";
 import { getPageSettings } from "@/lib/cms/pages";
@@ -46,48 +45,20 @@ export default async function ProjectPage({
   });
 
   return (
-    <article className="mx-auto w-full max-w-3xl px-6 py-16 sm:py-20">
-      <Link
-        href={page.backHref || "/projects"}
-        className="text-[15px] opacity-60 transition-opacity hover:opacity-100 hover:underline underline-offset-4"
-      >
-        {page.backLabel}
-      </Link>
-
-      <div className="mt-10 max-w-xl">
-        {meta ? <p className="font-mono text-sm opacity-60">{meta}</p> : null}
-        <h1 className="mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-          {project.title}
-        </h1>
-        {project.repoUrl ? (
-          <a
-            href={project.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-4 inline-flex items-center gap-2 rounded-full border border-black/30 px-3 py-1.5 font-mono text-sm transition-colors hover:border-black hover:bg-black hover:text-white dark:border-white/30 dark:hover:border-white dark:hover:bg-white dark:hover:text-black"
-          >
-            <GithubIcon className="h-4 w-4" />
-            View source on GitHub
-          </a>
-        ) : null}
-      </div>
-
-      <div className="mt-10 max-w-xl">
-        <Article blocks={project.content} />
-      </div>
-
-      <div className="mt-16 max-w-3xl">
-        <ProjectGallery images={project.gallery} />
-      </div>
-
-      <div className="mt-16 border-t border-black pt-8 dark:border-white">
-        <Link
-          href={page.backHref || "/projects"}
-          className="text-[15px] opacity-60 transition-opacity hover:opacity-100 hover:underline underline-offset-4"
-        >
-          {page.allLabel}
-        </Link>
-      </div>
-    </article>
+    <Page as="article">
+      <BackLink href={page.backHref || "/projects"} label={page.backLabel} />
+      <h1 className="mt-6 text-[2rem] font-bold leading-tight">{project.title}</h1>
+      {meta ? <p className="font-mono text-[15px]">{meta}</p> : null}
+      {project.repoUrl ? (
+        <p className="mt-2 font-mono text-[15px]">
+          source: <a href={project.repoUrl}>{project.repoUrl.replace(/^https?:\/\//, "")}</a>
+        </p>
+      ) : null}
+      <hr className="my-6" />
+      <Article blocks={project.content} />
+      <ProjectGallery images={project.gallery} />
+      <hr className="my-6" />
+      <BackLink href={page.backHref || "/projects"} label={page.allLabel} />
+    </Page>
   );
 }

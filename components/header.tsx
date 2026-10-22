@@ -7,19 +7,15 @@ export async function Header() {
   const [site, nav] = await Promise.all([getSite(), getNav()]);
 
   return (
-    <header className="border-b border-black dark:border-white">
-      <div className="mx-auto flex h-16 w-full max-w-3xl items-center justify-between gap-4 px-6">
-        <Link
-          href="/"
-          className="hidden shrink-0 text-lg font-semibold tracking-tight sm:inline"
-        >
+    <header className="raw px-4 pt-4 font-mono text-[15px]">
+      <div className="flex max-w-[72ch] flex-wrap items-baseline gap-x-4 gap-y-1">
+        <Link href="/" className="font-bold">
           {site.username}
         </Link>
-        <div className="flex items-center gap-6 sm:gap-8">
-          <NavLinks items={nav} />
-          <ThemeToggle />
-        </div>
+        <NavLinks items={nav} />
+        <ThemeToggle />
       </div>
+      <hr className="mt-3 max-w-[72ch]" />
     </header>
   );
 }

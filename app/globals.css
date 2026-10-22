@@ -2,45 +2,60 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* System fonts only. No webfont download, nothing to tune. */
 @theme inline {
-  --font-sans: var(--font-newsreader);
-  --font-serif: var(--font-newsreader);
-  --font-mono: var(--font-plex);
+  --font-sans: "Times New Roman", Times, serif;
+  --font-serif: "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, Menlo, Consolas, "Courier New", monospace;
 }
 
 :root {
   color-scheme: light;
+  --paper: #fff;
+  --ink: #000;
+  --link: #0000ee;
+  --visited: #551a8b;
 }
 
 .dark {
   color-scheme: dark;
-}
-
-html {
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  --paper: #111;
+  --ink: #ddd;
+  --link: #8ab4ff;
+  --visited: #c58af9;
 }
 
 body {
-  background-color: #ffffff;
-  color: #0a0a0a;
-  font-family: var(--font-newsreader);
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
-}
-
-.dark body {
-  background-color: #1f1f1f;
-  color: #f5f5f5;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.5;
 }
 
 ::selection {
-  background-color: #484747;
-  color: #f5f5f5;
+  background: var(--ink);
+  color: var(--paper);
 }
 
-.dark ::selection {
-  background-color: #f5f5f5;
-  color: #0a0a0a;
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* Plain links, the way browsers drew them before anyone styled them. */
+.raw a {
+  color: var(--link);
+  text-decoration: underline;
+}
+.raw a:visited {
+  color: var(--visited);
+}
+.raw a:hover {
+  background: var(--link);
+  color: var(--paper);
+}
+.raw hr {
+  border: 0;
+  border-top: 1px solid var(--ink);
 }

@@ -8,20 +8,17 @@ export function NavLinks({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
 
   return (
-    <nav className="flex items-center gap-5 sm:gap-7">
+    <nav aria-label="Main" className="flex flex-wrap gap-x-3">
       {items.map((item) => {
-        const active = pathname === item.href;
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={
-              active
-                ? "text-[15px] underline decoration-1 underline-offset-4"
-                : "text-[15px] opacity-65 transition-opacity hover:opacity-100 hover:underline decoration-1 underline-offset-4"
-            }
-          >
-            {item.label}
+        const active =
+          item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+        return active ? (
+          <span key={item.href} aria-current="page">
+            [{item.label.toLowerCase()}]
+          </span>
+        ) : (
+          <Link key={item.href} href={item.href}>
+            {item.label.toLowerCase()}
           </Link>
         );
       })}

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getPageSettings } from "@/lib/cms/pages";
 import { getStrings } from "@/lib/cms/site";
+import { Page, PageTitle } from "@/components/page";
 
 export default async function NotFound() {
   const [page, strings] = await Promise.all([
@@ -9,24 +10,12 @@ export default async function NotFound() {
   ]);
 
   return (
-    <div className="mx-auto w-full max-w-3xl px-6 py-28 text-center sm:py-40">
-      <span className="font-mono text-sm opacity-60">
-        {strings["notfound.code"] ?? "404"}
-      </span>
-      <h1 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
-        {page.heading}
-      </h1>
-      <p className="mx-auto mt-6 max-w-md text-lg leading-relaxed text-black/70 dark:text-white/70">
-        {page.intro}
+    <Page>
+      <p className="font-mono">{strings["notfound.code"] ?? "404"}</p>
+      <PageTitle title={page.heading} intro={page.intro} />
+      <p className="mt-6 font-mono text-[15px]">
+        <Link href={page.backHref || "/"}>{page.backLabel}</Link>
       </p>
-      <p className="mt-10">
-        <Link
-          href={page.backHref || "/"}
-          className="text-lg underline decoration-1 underline-offset-4 hover:opacity-70"
-        >
-          {page.backLabel}
-        </Link>
-      </p>
-    </div>
+    </Page>
   );
 }

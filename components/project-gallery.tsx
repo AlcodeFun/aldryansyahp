@@ -13,7 +13,7 @@ import type { GalleryImage } from "@/lib/gallery";
  *
  * The lightbox is a native <dialog> opened with showModal(), which buys focus
  * trapping, Escape-to-close, and an inert background for free. Without JS the
- * grid still renders and every tile is a plain link-sized button, just inert.
+ * grid still renders and every tile is a plain button, just inert.
  */
 export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   const [active, setActive] = useState<number | null>(null);
@@ -55,32 +55,36 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   const current = active === null ? null : images[active];
 
   return (
-    <section aria-labelledby="gallery-heading" className="mt-16">
-      <h2 id="gallery-heading" className="text-2xl font-semibold tracking-tight">
-        UI gallery
+    <section aria-labelledby="gallery-heading" className="mt-8">
+      <h2 id="gallery-heading" className="text-[1.4rem] font-bold">
+        Screenshots
       </h2>
 
-      <ul className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3">
+      <ul className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {images.map((image, i) => (
           <li key={`${image.src}-${i}`}>
             <button
               type="button"
               onClick={() => setActive(i)}
-              aria-label={`View image ${i + 1} of ${images.length}: ${image.alt}`}
-              className="group block w-full cursor-zoom-in overflow-hidden rounded-lg border border-black/15 transition-colors hover:border-black/40 focus-visible:border-black focus-visible:outline-none dark:border-white/15 dark:hover:border-white/40"
+              aria-label={`Open image ${i + 1} of ${images.length}: ${image.alt}`}
+              className="block w-full cursor-zoom-in border border-[var(--ink)]"
             >
-              <div className="relative aspect-[4/3] w-full bg-black/[0.03] dark:bg-white/[0.04]">
+              <div className="relative aspect-[4/3] w-full">
                 <Image
                   src={image.src}
-                  // Decorative: the button's aria-label already names the image,
-                  // so leaving alt on the image would announce it twice.
+                  // The button's aria-label already names the image.
                   alt=""
                   fill
-                  sizes="(min-width: 640px) 33vw, 50vw"
-                  className="object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+                  sizes="(min-width: 640px) 36ch, 100vw"
+                  className="object-cover"
                 />
               </div>
             </button>
+            {image.caption ? (
+              <p className="mt-1 font-mono text-[13px]">
+                fig. {i + 1}: {image.caption}
+              </p>
+            ) : null}
           </li>
         ))}
       </ul>
@@ -103,22 +107,30 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             step(1);
           }
         }}
-        className="m-auto h-full max-h-full w-full max-w-5xl border-0 bg-transparent p-0 backdrop:bg-black/90 open:h-full open:w-full"
+        className="m-0 h-full max-h-full w-full max-w-full border-0 bg-black p-0 text-white backdrop:bg-black"
       >
         {current ? (
-          <div className="flex h-full flex-col">
-            <div className="flex shrink-0 items-center justify-between gap-4 px-4 py-3 text-white sm:px-6">
-              <p className="font-mono text-sm tabular-nums opacity-80">
-                {String((active ?? 0) + 1).padStart(2, "0")} /{" "}
-                {String(images.length).padStart(2, "0")}
-              </p>
+          <div className="flex h-full flex-col font-mono text-[15px]">
+            <div className="flex shrink-0 gap-4 px-4 py-2">
+              <span>
+                {(active ?? 0) + 1}/{images.length}
+              </span>
+              {images.length > 1 ? (
+                <>
+                  <button type="button" onClick={() => step(-1)} className="cursor-pointer underline">
+                    prev
+                  </button>
+                  <button type="button" onClick={() => step(1)} className="cursor-pointer underline">
+                    next
+                  </button>
+                </>
+              ) : null}
               <button
                 type="button"
                 onClick={() => setActive(null)}
-                aria-label="Close viewer"
-                className="rounded border border-white/30 px-3 py-1 font-mono text-sm text-white transition-colors hover:bg-white hover:text-black"
+                className="ml-auto cursor-pointer underline"
               >
-                Close ✕
+                close (esc)
               </button>
             </div>
 
@@ -133,34 +145,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               />
             </div>
 
-            {current.caption || images.length > 1 ? (
-              <div className="shrink-0 px-4 py-4 sm:px-6">
-                {current.caption ? (
-                  <p className="text-center text-white/85">{current.caption}</p>
-                ) : null}
-
-                {images.length > 1 ? (
-                  <div className="mt-3 flex items-center justify-center gap-3">
-                    <button
-                      type="button"
-                      onClick={() => step(-1)}
-                      aria-label="Previous image"
-                      className="rounded border border-white/30 px-4 py-1.5 font-mono text-sm text-white transition-colors hover:bg-white hover:text-black"
-                    >
-                      ← Previous
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => step(1)}
-                      aria-label="Next image"
-                      className="rounded border border-white/30 px-4 py-1.5 font-mono text-sm text-white transition-colors hover:bg-white hover:text-black"
-                    >
-                      Next →
-                    </button>
-                  </div>
-                ) : null}
-              </div>
-            ) : null}
+            {current.caption ? <p className="shrink-0 px-4 py-2">{current.caption}</p> : null}
           </div>
         ) : null}
       </dialog>

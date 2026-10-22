@@ -12,7 +12,7 @@ export const siteSettings = {
   nickname: "Aldry",
   role: "Software Engineer",
   tagline:
-    "A simple, writing-first portfolio. Part résumé, part journal — everything stays in black and white.",
+    "Résumé, project write-ups, and notes.",
   location: "[City, Country]",
   email: "aldryansyah30@gmail.com",
   github: "https://github.com/alcodefun",
@@ -28,10 +28,10 @@ export const navItems = [
 ];
 
 export const homeHero = {
-  updatedLabel: "Last Updated —",
+  updatedLabel: "updated",
   lineOne: "Coding all day till eyes go dry",
-  greeting: "Hello, I am",
-  experiencePrefix: "a 2+ years experince",
+  greeting: "I'm",
+  experiencePrefix: "2+ years as a",
 };
 
 export const homeSections = [
@@ -39,22 +39,22 @@ export const homeSections = [
     key: "in_short",
     kind: "text",
     title: "In short",
-    body: "As a software engineer, I enjoy about crafting software and the art of trial n error. Interest to build both side of system (backend + frontend). Currently working as Frontend Web Developer @ Nutapos. This site contain deep dive information writed in story telling style about my personal projects, journey, and other things about me",
+    body: "As a software engineer, I like building software and figuring things out by trial and error. I work on both backend and frontend. Currently a Frontend Web Developer at Nutapos. This site has long write-ups of my personal projects, my journey, and other things about me.",
   },
-  { key: "educated_at", kind: "heading", title: "Educated At", body: "" },
+  { key: "educated_at", kind: "heading", title: "Education", body: "" },
   {
     key: "recent_on_me",
     kind: "text",
-    title: "Recent on Me",
-    body: "Starting my photobooth business with my partner. Reduce operational zero cost on photobooth app subscription. We develop our photobooth system to integrate the camera and the printer. Research photobooth flow to enhance user experience and time efficiency.",
+    title: "Lately",
+    body: "Starting my photobooth business with my partner. We cut the photobooth app subscription to zero by writing our own system that drives the camera and the printer, and we keep reworking the flow so each session takes less time.",
   },
   {
     key: "tech_experiences",
     kind: "heading",
-    title: "Tech Tools Experiences",
+    title: "Tools",
     body: "",
   },
-  { key: "reach_me", kind: "contact", title: "Reach Me", body: "" },
+  { key: "reach_me", kind: "contact", title: "Contact", body: "" },
 ];
 
 export const education = [
@@ -776,8 +776,8 @@ export const pageSettings = [
     seoDescription: "A running log of short essays and notes.",
     heading: "Journey",
     intro:
-      "A running log of small essays and notes, in the order they happened. Click any entry to read the whole thing.",
-    backLabel: "← back to the journal",
+      "Short essays, newest first.",
+    backLabel: "← journey",
     backHref: "/journey",
     allLabel: "← all entries",
     listMetaFormat: "{date} · {readMinutes} min",
@@ -790,8 +790,8 @@ export const pageSettings = [
     seoDescription: "A few projects, written the way they actually happened.",
     heading: "Projects",
     intro:
-      "A short list of things I have built. Each one is written the way it actually happened",
-    backLabel: "← back to projects",
+      "Things I built, and what actually happened while building them.",
+    backLabel: "← projects",
     backHref: "/projects",
     allLabel: "← all projects",
     listMetaFormat: "{year}",
@@ -804,22 +804,22 @@ export const pageSettings = [
     seoDescription: "Short notes and half-thoughts, in the order I wrote them.",
     heading: "Random",
     intro:
-      "Short notes and half-thoughts that never found a longer home. Timestamped in the order I wrote them, which is rarely chronological.",
-    backLabel: "← back to random",
+      "Notes too short for the journey page.",
+    backLabel: "← random",
     backHref: "/random",
-    allLabel: "← all random thoughts",
+    allLabel: "← all notes",
     listMetaFormat: "{date}",
-    detailMetaFormat: "{date} · random thought",
+    detailMetaFormat: "{date}",
     emptyMessage: "No notes yet.",
   },
   {
     pageKey: "not_found",
     seoTitle: "Not found",
     seoDescription: "",
-    heading: "This page is missing from the archive.",
+    heading: "Not found.",
     intro:
-      "It may have been removed, or the address was written down wrong. Either way, the rest of the site is still here.",
-    backLabel: "← back home",
+      "Nothing at this address.",
+    backLabel: "← home",
     backHref: "/",
     allLabel: "",
     listMetaFormat: "",
@@ -829,13 +829,13 @@ export const pageSettings = [
 ];
 
 export const uiStrings = [
-  { key: "home.last_updated_prefix", value: "Last Updated —", groupName: "home" },
+  { key: "home.last_updated_prefix", value: "updated", groupName: "home" },
   { key: "home.random_notes_link", value: "random notes", groupName: "home" },
   { key: "home.random_notes_href", value: "/random", groupName: "home" },
   { key: "home.projects_link", value: "projects", groupName: "home" },
   { key: "home.projects_href", value: "/projects", groupName: "home" },
-  { key: "footer.random_notes_link", value: "random notes", groupName: "footer" },
-  { key: "footer.say_hello_link", value: "say hello", groupName: "footer" },
+  { key: "footer.random_notes_link", value: "notes", groupName: "footer" },
+  { key: "footer.say_hello_link", value: "email", groupName: "footer" },
   { key: "footer.separator", value: "·", groupName: "footer" },
   { key: "notfound.code", value: "404", groupName: "notfound" },
 ];

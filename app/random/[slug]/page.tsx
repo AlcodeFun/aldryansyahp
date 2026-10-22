@@ -1,7 +1,7 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Article } from "@/components/article";
+import { BackLink, Page } from "@/components/page";
 import { getRandomNotes, getRandomNoteBySlug } from "@/lib/cms/notes";
 import { getPageSettings } from "@/lib/cms/pages";
 import { formatDate, renderMeta } from "@/lib/cms/format";
@@ -42,33 +42,14 @@ export default async function RandomNotePage({
   });
 
   return (
-    <article className="mx-auto w-full max-w-3xl px-6 py-16 sm:py-20">
-      <Link
-        href={page.backHref || "/random"}
-        className="text-[15px] opacity-60 transition-opacity hover:opacity-100 hover:underline underline-offset-4"
-      >
-        {page.backLabel}
-      </Link>
-
-      <div className="mt-10 max-w-xl">
-        {meta ? <p className="font-mono text-sm opacity-60">{meta}</p> : null}
-        <h1 className="mt-5 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-          {note.title}
-        </h1>
-      </div>
-
-      <div className="mt-10 max-w-xl">
-        <Article blocks={note.content} />
-      </div>
-
-      <div className="mt-16 border-t border-black pt-8 dark:border-white">
-        <Link
-          href={page.backHref || "/random"}
-          className="text-[15px] opacity-60 transition-opacity hover:opacity-100 hover:underline underline-offset-4"
-        >
-          {page.allLabel}
-        </Link>
-      </div>
-    </article>
+    <Page as="article">
+      <BackLink href={page.backHref || "/random"} label={page.backLabel} />
+      <h1 className="mt-6 text-[2rem] font-bold leading-tight">{note.title}</h1>
+      {meta ? <p className="font-mono text-[15px]">{meta}</p> : null}
+      <hr className="my-6" />
+      <Article blocks={note.content} />
+      <hr className="my-6" />
+      <BackLink href={page.backHref || "/random"} label={page.allLabel} />
+    </Page>
   );
 }

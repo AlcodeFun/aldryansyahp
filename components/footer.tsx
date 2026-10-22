@@ -3,24 +3,20 @@ import { getSite, getStrings } from "@/lib/cms/site";
 
 export async function Footer() {
   const [site, strings] = await Promise.all([getSite(), getStrings()]);
-  const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-black dark:border-white">
-      <div className="mx-auto flex w-full max-w-3xl flex-col items-start justify-between gap-2 px-6 py-10 sm:flex-row sm:items-center">
-        <p className="font-mono text-sm opacity-70">
-          © {year} {site.name}
-        </p>
-        <p className="flex items-center font-mono text-sm opacity-70">
-          <Link href={strings["home.random_notes_href"] ?? "/random"} className="hover:underline">
-            {strings["footer.random_notes_link"] ?? "random notes"}
-          </Link>
-          <span className="mx-2">{strings["footer.separator"] ?? "·"}</span>
-          <a href={`mailto:${site.email}`} className="hover:underline">
-            {strings["footer.say_hello_link"] ?? "reach me out"}
-          </a>
-        </p>
-      </div>
+    <footer className="raw px-4 pb-6 pt-12 font-mono text-[15px]">
+      <hr className="mb-3 max-w-[72ch]" />
+      <p className="max-w-[72ch]">
+        {site.name}, {new Date().getFullYear()}.{" "}
+        <Link href={strings["home.random_notes_href"] ?? "/random"}>
+          {strings["footer.random_notes_link"] ?? "notes"}
+        </Link>
+        {" / "}
+        <a href={`mailto:${site.email}`}>
+          {strings["footer.say_hello_link"] ?? "email"}
+        </a>
+      </p>
     </footer>
   );
 }
