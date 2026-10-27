@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Article } from "@/components/article";
-import { BackLink, Page } from "@/components/page";
+import { BackLink, Page, SectionHeading } from "@/components/page";
 import { getJourneyEntries, getJourneyEntryBySlug } from "@/lib/cms/journey";
 import { getPageSettings } from "@/lib/cms/pages";
 import { formatDate, renderMeta } from "@/lib/cms/format";
@@ -42,11 +42,16 @@ export default async function JourneyPostPage({
   return (
     <Page as="article">
       <BackLink href={page.backHref || "/journey"} label={page.backLabel} />
-      <h1 className="mt-6 text-[2.6rem]">{entry.title}</h1>
-      {meta ? <p className="mt-2 text-[16px] text-[var(--muted)]">{meta}</p> : null}
-      <hr className="my-6" />
-      <Article blocks={entry.content} />
-      <hr className="my-6" />
+      {meta ? (
+        <p className="mt-10 text-xs font-bold uppercase tracking-widest text-[#a37700] dark:text-yellow">
+          {meta}
+        </p>
+      ) : null}
+      <SectionHeading title={entry.title} as="h1" className="mt-3" />
+      <div className="mt-10">
+        <Article blocks={entry.content} />
+      </div>
+      <hr className="my-12 border-line" />
       <BackLink href={page.backHref || "/journey"} label={page.allLabel} />
     </Page>
   );

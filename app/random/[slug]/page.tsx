@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Article } from "@/components/article";
-import { BackLink, Page } from "@/components/page";
+import { BackLink, Page, SectionHeading } from "@/components/page";
 import { getRandomNotes, getRandomNoteBySlug } from "@/lib/cms/notes";
 import { getPageSettings } from "@/lib/cms/pages";
 import { formatDate, renderMeta } from "@/lib/cms/format";
@@ -44,11 +44,16 @@ export default async function RandomNotePage({
   return (
     <Page as="article">
       <BackLink href={page.backHref || "/random"} label={page.backLabel} />
-      <h1 className="mt-6 text-[2.6rem]">{note.title}</h1>
-      {meta ? <p className="mt-2 text-[16px] text-[var(--muted)]">{meta}</p> : null}
-      <hr className="my-6" />
-      <Article blocks={note.content} />
-      <hr className="my-6" />
+      {meta ? (
+        <p className="mt-10 text-xs font-bold uppercase tracking-widest text-[#a37700] dark:text-yellow">
+          {meta}
+        </p>
+      ) : null}
+      <SectionHeading title={note.title} as="h1" className="mt-3" />
+      <div className="mt-10">
+        <Article blocks={note.content} />
+      </div>
+      <hr className="my-12 border-line" />
       <BackLink href={page.backHref || "/random"} label={page.allLabel} />
     </Page>
   );

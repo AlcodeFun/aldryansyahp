@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { Article } from "@/components/article";
-import { BackLink, Page } from "@/components/page";
+import { BackLink, Page, SectionHeading } from "@/components/page";
 import { ProjectGallery } from "@/components/project-gallery";
 import { getProjects, getProjectBySlug } from "@/lib/cms/projects";
 import { getPageSettings } from "@/lib/cms/pages";
@@ -47,17 +47,31 @@ export default async function ProjectPage({
   return (
     <Page as="article">
       <BackLink href={page.backHref || "/projects"} label={page.backLabel} />
-      <h1 className="mt-6 text-[2.6rem]">{project.title}</h1>
-      {meta ? <p className="mt-2 text-[16px] text-[var(--muted)]">{meta}</p> : null}
-      {project.repoUrl ? (
-        <p className="mt-1">
-          source: <a href={project.repoUrl}>{project.repoUrl.replace(/^https?:\/\//, "")}</a>
+      {meta ? (
+        <p className="mt-10 text-xs font-bold uppercase tracking-widest text-[#a37700] dark:text-yellow">
+          {meta}
         </p>
       ) : null}
-      <hr className="my-6" />
-      <Article blocks={project.content} />
-      <ProjectGallery images={project.gallery} />
-      <hr className="my-6" />
+      <SectionHeading title={project.title} as="h1" className="mt-3" />
+      {project.repoUrl ? (
+        <a
+          href={project.repoUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-6 inline-flex items-center gap-2 rounded-lg border-2 border-navy px-4 py-2 text-sm font-bold text-navy transition-colors hover:bg-navy hover:text-white dark:border-yellow dark:text-yellow dark:hover:bg-yellow dark:hover:text-navy"
+        >
+          Source code ↗
+        </a>
+      ) : null}
+      <div className="mt-10">
+        <Article blocks={project.content} />
+      </div>
+      {project.gallery.length > 0 ? (
+        <div className="mt-14">
+          <ProjectGallery images={project.gallery} />
+        </div>
+      ) : null}
+      <hr className="my-12 border-line" />
       <BackLink href={page.backHref || "/projects"} label={page.allLabel} />
     </Page>
   );

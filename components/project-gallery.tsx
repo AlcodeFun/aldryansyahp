@@ -15,7 +15,20 @@ import type { GalleryImage } from "@/lib/gallery";
  * trapping, Escape-to-close, and an inert background for free. Without JS the
  * grid still renders and every tile is a plain button, just inert.
  */
-export function ProjectGallery({ images }: { images: GalleryImage[] }) {
+export function ProjectGallery({
+  images,
+  heading = "Screenshots",
+  grid = "grid-cols-2 sm:grid-cols-3",
+  aspect = "aspect-[4/3]",
+  fit = "cover",
+}: {
+  images: GalleryImage[];
+  /** Pass null when the surrounding section already has a heading. */
+  heading?: string | null;
+  grid?: string;
+  aspect?: string;
+  fit?: "cover" | "contain";
+}) {
   const [active, setActive] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
@@ -55,36 +68,34 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
   const current = active === null ? null : images[active];
 
   return (
-    <section aria-labelledby="gallery-heading" className="mt-8">
-      <h2 id="gallery-heading" className="text-[1.6rem]">
-        Screenshots
-      </h2>
+    <section aria-label={heading ?? "Gallery"}>
+      {heading ? (
+        <h2 className="mb-5 text-2xl font-bold text-heading">{heading}</h2>
+      ) : null}
 
-      <ul className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
+      <ul className={`grid gap-3 ${grid}`}>
         {images.map((image, i) => (
           <li key={`${image.src}-${i}`}>
             <button
               type="button"
               onClick={() => setActive(i)}
               aria-label={`Open image ${i + 1} of ${images.length}: ${image.alt}`}
-              className="block w-full cursor-zoom-in sketch overflow-hidden"
+              className="group block w-full cursor-zoom-in overflow-hidden rounded-xl border border-line bg-surface p-1.5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
             >
-              <div className="relative aspect-[4/3] w-full">
+              <div className={`relative w-full overflow-hidden rounded-lg bg-soft ${aspect}`}>
                 <Image
                   src={image.src}
                   // The button's aria-label already names the image.
                   alt=""
                   fill
-                  sizes="(min-width: 640px) 36ch, 100vw"
-                  className="object-cover"
+                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                  className={fit === "cover" ? "object-cover object-top" : "object-contain"}
                 />
               </div>
+              {image.caption ? (
+                <p className="px-1.5 pb-1 pt-2 text-sm text-muted">{image.caption}</p>
+              ) : null}
             </button>
-            {image.caption ? (
-              <p className="mt-1 text-[16px] text-[var(--muted)]">
-                fig. {i + 1}: {image.caption}
-              </p>
-            ) : null}
           </li>
         ))}
       </ul>
@@ -107,20 +118,20 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
             step(1);
           }
         }}
-        className="m-0 h-full max-h-full w-full max-w-full border-0 bg-black p-0 text-white backdrop:bg-black"
+        className="m-0 h-full max-h-full w-full max-w-full border-0 bg-navy/95 p-0 text-white backdrop:bg-navy/95"
       >
         {current ? (
           <div className="flex h-full flex-col">
-            <div className="flex shrink-0 gap-4 px-4 py-2">
+            <div className="flex shrink-0 items-center gap-3 px-4 py-3 text-sm font-semibold">
               <span>
                 {(active ?? 0) + 1}/{images.length}
               </span>
               {images.length > 1 ? (
                 <>
-                  <button type="button" onClick={() => step(-1)} className="cursor-pointer underline">
+                  <button type="button" onClick={() => step(-1)} className="cursor-pointer rounded-full border border-white/30 px-3 py-1 hover:bg-yellow hover:text-navy">
                     prev
                   </button>
-                  <button type="button" onClick={() => step(1)} className="cursor-pointer underline">
+                  <button type="button" onClick={() => step(1)} className="cursor-pointer rounded-full border border-white/30 px-3 py-1 hover:bg-yellow hover:text-navy">
                     next
                   </button>
                 </>
@@ -128,7 +139,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               <button
                 type="button"
                 onClick={() => setActive(null)}
-                className="ml-auto cursor-pointer underline"
+                className="ml-auto cursor-pointer rounded-full bg-yellow px-3 py-1 text-navy"
               >
                 close (esc)
               </button>
@@ -145,7 +156,7 @@ export function ProjectGallery({ images }: { images: GalleryImage[] }) {
               />
             </div>
 
-            {current.caption ? <p className="shrink-0 px-4 py-2">{current.caption}</p> : null}
+            {current.caption ? <p className="shrink-0 px-4 py-3 text-center">{current.caption}</p> : null}
           </div>
         ) : null}
       </dialog>

@@ -1,14 +1,19 @@
 import type { Metadata } from "next";
-import { Patrick_Hand } from "next/font/google";
+import { Montserrat, Open_Sans } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { getSite } from "@/lib/cms/site";
 import "./globals.css";
 
-const hand = Patrick_Hand({
-  variable: "--font-hand",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
-  weight: "400",
+  weight: ["600", "700", "800"],
+});
+
+const openSans = Open_Sans({
+  variable: "--font-open-sans",
+  subsets: ["latin"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -33,14 +38,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={hand.variable} suppressHydrationWarning>
+    <html lang="en" className={`${montserrat.variable} ${openSans.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript() }} />
       </head>
       <body className="flex min-h-screen flex-col">
         <a
           href="#content"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:bg-[var(--card)] focus:px-2"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-50 focus:bg-[var(--yellow)] focus:px-3 focus:py-1 focus:font-semibold focus:text-[var(--navy)]"
         >
           skip to content
         </a>

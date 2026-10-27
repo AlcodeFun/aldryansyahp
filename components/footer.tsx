@@ -5,18 +5,24 @@ export async function Footer() {
   const [site, strings] = await Promise.all([getSite(), getStrings()]);
 
   return (
-    <footer className="raw px-5 pb-8 pt-16 text-[var(--muted)]">
-      <hr className="mb-3 mx-auto max-w-[60ch]" />
-      <p className="mx-auto max-w-[60ch]">
-        {site.name}, {new Date().getFullYear()}.{" "}
-        <Link href={strings["home.random_notes_href"] ?? "/random"}>
-          {strings["footer.random_notes_link"] ?? "notes"}
-        </Link>
-        {" / "}
-        <a href={`mailto:${site.email}`}>
-          {strings["footer.say_hello_link"] ?? "email"}
-        </a>
-      </p>
+    <footer className="border-t border-line bg-surface">
+      <div className="mx-auto flex w-full max-w-6xl flex-col gap-3 px-5 py-8 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <p className="text-muted">
+          <span className="font-display font-bold uppercase tracking-wide text-heading">
+            {site.name}
+          </span>
+          <span className="mx-2">|</span>
+          {site.role} Portfolio {new Date().getFullYear()}
+        </p>
+        <p className="flex gap-4 font-semibold">
+          <Link href={strings["home.random_notes_href"] ?? "/random"} className="text-muted hover:text-heading hover:underline">
+            {strings["footer.random_notes_link"] ?? "Notes"}
+          </Link>
+          <a href={`mailto:${site.email}`} className="text-muted hover:text-heading hover:underline">
+            {strings["footer.say_hello_link"] ?? "Email"}
+          </a>
+        </p>
+      </div>
     </footer>
   );
 }
