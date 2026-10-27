@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { ProjectGallery } from "@/components/project-gallery";
-import { Container, SectionHeading, accentBg, accentText } from "@/components/page";
+import { Container, SectionHeading, accentBg } from "@/components/page";
 import {
   about,
   achievements,
@@ -273,11 +273,22 @@ export function Education() {
     <SectionShell id="education" title="Education" className="bg-surface">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
         <div className="flex flex-col bg-[#0b2a6b] p-8 text-white sm:p-10">
-          <Eyebrow className="text-yellow">Education</Eyebrow>
-          <h3 className="mt-2 text-3xl font-bold">{education.school}</h3>
-          <p className="mt-1 text-white/80">
-            {education.place} · {education.period}
-          </p>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <Eyebrow className="text-yellow">Education</Eyebrow>
+              <h3 className="mt-2 text-3xl font-bold">{education.school}</h3>
+              <p className="mt-1 text-white/80">
+                {education.place} · {education.period}
+              </p>
+            </div>
+            <Image
+              src={education.logo}
+              alt="IPB University logo"
+              width={72}
+              height={72}
+              className="h-16 w-16 shrink-0 rounded-full bg-white p-1 shadow-lg sm:h-18 sm:w-18"
+            />
+          </div>
           <p className="mt-6 text-lg leading-snug">{education.degree}</p>
           <div className="min-h-10 flex-1" />
           <div className="border-t border-white/20 pt-8">
@@ -509,22 +520,28 @@ export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1"
         <article
           key={project.slug}
           aria-labelledby={`${project.slug}-title`}
-          className={`py-16 sm:py-20 ${i % 2 === 1 ? "bg-surface" : ""}`}
+          className={i === 0 ? "pb-6 pt-14 sm:pt-20" : i === projects.length - 1 ? "pb-14 pt-6 sm:pb-20" : "py-6"}
         >
-          <Container className="grid gap-10 lg:grid-cols-[0.8fr_1.4fr]">
+          <Container>
+          {/* Each project sits on a card filled with its own colour, like the
+              experience cards. */}
+          <div
+            style={{ backgroundColor: project.color }}
+            className="grid gap-10 rounded-3xl p-6 text-white shadow-lg sm:p-10 lg:grid-cols-[0.8fr_1.4fr]"
+          >
             <div className="flex flex-col">
-              <p className="text-sm font-bold uppercase tracking-wide text-[#a37700] dark:text-yellow">
+              <p className="text-sm font-bold uppercase tracking-wide text-yellow">
                 Project {String(i + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
                 <span className="mx-2">·</span>
                 {project.year}
                 {project.org ? ` · ${project.org}` : ""}
               </p>
-              <h3 id={`${project.slug}-title`} className={`mt-2 text-3xl font-extrabold leading-tight ${accentText[project.accent]}`}>
+              <h3 id={`${project.slug}-title`} className="mt-2 text-3xl font-extrabold leading-tight text-white">
                 {project.title}
               </h3>
-              <p className="mt-4 text-lg leading-relaxed">{project.description}</p>
+              <p className="mt-4 text-lg leading-relaxed text-white/90">{project.description}</p>
 
-              <Eyebrow className="mt-8 text-muted">Tech stack</Eyebrow>
+              <Eyebrow className="mt-8 text-white/70">Tech stack</Eyebrow>
               <ul className="mt-3 space-y-3">
                 {project.stack.map((tech) => {
                   const logo = techLogo(tech.name);
@@ -532,7 +549,7 @@ export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1"
                   <li key={tech.name} className="flex items-center gap-3">
                     <span
                       aria-hidden
-                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-white p-2 font-display text-sm font-bold ring-1 ring-line ${accentText[project.accent]}`}
+                      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-white p-2 font-display text-sm font-bold text-navy shadow-sm"
                     >
                       {logo ? (
                         // eslint-disable-next-line @next/next/no-img-element -- small static SVGs
@@ -542,8 +559,8 @@ export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1"
                       )}
                     </span>
                     <span>
-                      <span className={`block font-display font-bold ${accentText[project.accent]}`}>{tech.name}</span>
-                      <span className="text-sm text-muted">{tech.role}</span>
+                      <span className="block font-display font-bold">{tech.name}</span>
+                      <span className="text-sm text-white/70">{tech.role}</span>
                     </span>
                   </li>
                   );
@@ -556,7 +573,7 @@ export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1"
                     href={project.repo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-lg border-2 border-navy px-4 py-2 text-sm font-bold text-navy transition-colors hover:bg-navy hover:text-white dark:border-yellow dark:text-yellow dark:hover:bg-yellow dark:hover:text-navy"
+                    className="inline-flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-bold text-navy shadow-sm transition-colors hover:bg-yellow"
                   >
                     Source code ↗
                   </a>
@@ -605,6 +622,7 @@ export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1"
                 }
               />
             </div>
+          </div>
           </Container>
         </article>
       ))}
@@ -695,5 +713,135 @@ export function Certifications({ headingLevel = "h2" }: { headingLevel?: "h1" | 
         ))}
       </div>
     </SectionShell>
+  );
+}
+
+/* ------------------------------------------------------------- Contact */
+
+type ContactIconName = "mail" | "phone" | "github" | "globe" | "linkedin" | "pin";
+
+function ContactIcon({ name }: { name: ContactIconName }) {
+  const stroke = {
+    viewBox: "0 0 24 24",
+    fill: "none",
+    stroke: "currentColor",
+    strokeWidth: 1.8,
+    strokeLinecap: "round" as const,
+    strokeLinejoin: "round" as const,
+    className: "h-6 w-6",
+    "aria-hidden": true,
+  };
+  switch (name) {
+    case "mail":
+      return (
+        <svg {...stroke}>
+          <rect x="3" y="5" width="18" height="14" rx="2" />
+          <path d="m3 7 9 6 9-6" />
+        </svg>
+      );
+    case "phone":
+      return (
+        <svg {...stroke}>
+          <path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2" />
+        </svg>
+      );
+    case "github":
+      return (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6" aria-hidden>
+          <path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z" />
+        </svg>
+      );
+    case "globe":
+      return (
+        <svg {...stroke}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" />
+        </svg>
+      );
+    case "linkedin":
+      return (
+        <svg viewBox="0 0 24 24" fill="currentColor" className="h-6 w-6" aria-hidden>
+          <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0Z" />
+        </svg>
+      );
+    case "pin":
+      return (
+        <svg {...stroke}>
+          <path d="M12 21s-7-6.2-7-12a7 7 0 0 1 14 0c0 5.8-7 12-7 12Z" />
+          <circle cx="12" cy="9" r="2.5" />
+        </svg>
+      );
+  }
+}
+
+export function Contact() {
+  const rows: { icon: ContactIconName; label: string; text: string; href?: string; tint: string }[] = [
+    { icon: "mail", label: "Email", text: profile.email, href: `mailto:${profile.email}`, tint: "bg-yellow text-navy" },
+    { icon: "phone", label: "Phone", text: profile.phone, href: `tel:${profile.phone.replace(/\s/g, "")}`, tint: "bg-[#5fd08f] text-forest" },
+    { icon: "github", label: "GitHub", text: profile.github.replace(/^https?:\/\//, ""), href: profile.github, tint: "bg-white text-navy" },
+    { icon: "linkedin", label: "LinkedIn", text: "Muhammad Aldryansyah Pamungkas", href: profile.linkedin, tint: "bg-[#0a66c2] text-white" },
+    { icon: "globe", label: "Portfolio", text: profile.website.replace(/^https?:\/\//, ""), href: profile.website, tint: "bg-[#4cc3f7] text-navy" },
+    { icon: "pin", label: "Location", text: profile.location, tint: "bg-coral text-white" },
+  ];
+
+  return (
+    <section
+      id="contact"
+      aria-labelledby="contact-title"
+      className="relative scroll-mt-20 overflow-hidden bg-navy py-20 text-white sm:py-28"
+    >
+      <Stripes />
+      <Container className="relative lg:pr-40">
+        <div>
+          <h2 id="contact-title" className="text-4xl font-extrabold tracking-tight sm:text-5xl">
+            Contact
+          </h2>
+          <span aria-hidden className="mt-4 block h-1.5 w-20 bg-yellow" />
+          <div className="flex flex-wrap items-center justify-between gap-6">
+          <p className="mt-6 text-lg text-white/85">Thank you for your time.</p>
+          <a
+            href={`mailto:${profile.email}`}
+            className="mt-6 inline-flex items-center gap-3 rounded-xl bg-yellow px-6 py-3 font-display font-bold text-navy shadow-lg transition hover:-translate-y-0.5 hover:shadow-xl"
+          >
+            <ContactIcon name="mail" />
+            Send an email
+          </a>
+          </div>
+        </div>
+        <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {rows.map((row) => {
+            const body = (
+              <>
+                <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${row.tint}`}>
+                  <ContactIcon name={row.icon} />
+                </span>
+                <span className="min-w-0">
+                  <span className="block font-display text-xs font-bold uppercase tracking-wider text-yellow">
+                    {row.label}
+                  </span>
+                  <span className="block text-[15px] [overflow-wrap:anywhere]">{row.text}</span>
+                </span>
+              </>
+            );
+            const box = "flex items-center gap-4 rounded-2xl bg-navy-2/60 p-4 ring-1 ring-white/10";
+            return (
+              <li key={row.label}>
+                {row.href ? (
+                  <a
+                    href={row.href}
+                    {...(row.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className={`${box} transition hover:-translate-y-0.5 hover:bg-navy-2 hover:ring-yellow/60`}
+                  >
+                    {body}
+                  </a>
+                ) : (
+                  <div className={box}>{body}</div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </Container>
+    </section>
   );
 }

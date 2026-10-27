@@ -41,6 +41,7 @@ export const about = {
 
 export const education = {
   school: "IPB University",
+  logo: img("logo-ipb"),
   place: "Bogor, Indonesia",
   period: "Aug 2021 – Aug 2025",
   degree: "Bachelor of Applied Science in Computer, Software Engineering Technology",
@@ -239,6 +240,8 @@ export const projects: {
   title: string;
   description: string;
   accent: Accent;
+  /** Background of the project block, taken from the project's own UI. */
+  color: string;
   stack: { name: string; role: string }[];
   /** Repository on GitHub, when public. */
   repo?: string;
@@ -254,6 +257,7 @@ export const projects: {
     description:
       "Manages photo sessions end to end: capture, processing, custom layouts and delivery of final photos through a web workflow.",
     accent: "forest",
+    color: "#6e1f2c",
     stack: [
       { name: "React", role: "Frontend" },
       { name: "Electron", role: "Desktop app" },
@@ -278,6 +282,7 @@ export const projects: {
     description:
       "GPS-based agricultural land mapping. Built as a Software Engineer Intern in the IPB × Okiagaru Matching Fund program, and the output became my final project for my bachelor's degree.",
     accent: "forest",
+    color: "#1d5a35",
     stack: [
       { name: "Vue.js", role: "Frontend" },
       { name: "Laravel", role: "Backend" },
@@ -299,6 +304,7 @@ export const projects: {
     title: "Godong Ijo Landing Page and CMS",
     description: "Company landing page with a CMS so the team can update content without code.",
     accent: "forest",
+    color: "#0d6b55",
     stack: [
       { name: "Vue.js", role: "Frontend" },
       { name: "Laravel", role: "Backend" },
@@ -319,6 +325,7 @@ export const projects: {
     description:
       "Frontend screens and REST API integration for an employee attendance system, covering attendance data and user workflows.",
     accent: "teal",
+    color: "#4b1d7a",
     stack: [
       { name: "Vue.js", role: "Frontend" },
       { name: "Axios · REST API", role: "API integration" },
@@ -340,6 +347,7 @@ export const projects: {
     description:
       "Merchant tracking platform that updates locations through AJAX and shows them on a dynamic Google Maps view.",
     accent: "sky",
+    color: "#b8461b",
     stack: [
       { name: "PHP Native", role: "Backend" },
       { name: "AJAX", role: "Live updates" },
@@ -375,6 +383,7 @@ export const projects: {
     title: "Camp Survivor Cashier",
     description: "Cashier app with responsive screens and API-based data handling for transaction workflows.",
     accent: "forest",
+    color: "#4a3b1f",
     stack: [
       { name: "React.js", role: "Frontend" },
       { name: "Bootstrap", role: "UI framework" },
@@ -389,6 +398,7 @@ export const projects: {
     title: "Foodish App",
     description: "Android food-delivery app that manages its data through a REST API and MongoDB.",
     accent: "crimson",
+    color: "#b91c1c",
     stack: [
       { name: "Android", role: "Mobile app" },
       { name: "MongoDB", role: "Database" },
