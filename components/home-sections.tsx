@@ -402,9 +402,27 @@ export function RecentOnMe() {
         className="grid gap-8 overflow-hidden rounded-3xl text-white shadow-lg lg:grid-cols-[1.3fr_1fr]"
       >
         <div className="p-8 sm:p-10">
-          <span className="inline-flex rounded-xl bg-[#fdf3e1] px-4 py-3 shadow-sm">
-            <Image src={business.logo} alt={business.name} width={247} height={47} className="h-9 w-auto" />
-          </span>
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="inline-flex rounded-xl bg-[#fdf3e1] px-4 py-3 shadow-sm">
+              <Image src={business.logo} alt={business.name} width={247} height={47} className="h-9 w-auto" />
+            </span>
+            <a
+              href={business.instagram.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${business.name} on Instagram (${business.instagram.handle})`}
+              className="group inline-flex items-center gap-3 rounded-xl bg-white/10 py-2 pl-2 pr-4 ring-1 ring-white/20 transition hover:-translate-y-0.5 hover:bg-white/20"
+            >
+              <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-[linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)] text-white shadow-sm">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-5 w-5" aria-hidden>
+                  <rect x="3" y="3" width="18" height="18" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
+                </svg>
+              </span>
+              <span className="text-sm font-semibold">{business.instagram.handle}</span>
+            </a>
+          </div>
           <Eyebrow className="mt-8 text-yellow">{business.kind}</Eyebrow>
           <h3 className="mt-2 text-3xl font-extrabold">{business.name}</h3>
           <p className="mt-1 text-white/80">{business.meta}</p>

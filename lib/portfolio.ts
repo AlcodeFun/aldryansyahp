@@ -155,6 +155,7 @@ export const business = {
   ],
   stack: ["React", "Electron", "Node.js", "Cloudflare R2"],
   link: { label: "See the project", href: "/projects#kelana-photo-booth" },
+  instagram: { handle: "@kelanacirebon_", href: "https://www.instagram.com/kelanacirebon_/" },
 };
 
 export const experience: {
