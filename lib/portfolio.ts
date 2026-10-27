@@ -18,7 +18,6 @@ export const profile = {
   email: "aldryansyahp@gmail.com",
   phone: "+62 895 608 837 548",
   github: "https://github.com/AlcodeFun",
-  website: "https://aldryansyahp.vercel.app",
   linkedin: "https://linkedin.com/in/muhammadaldryansyahpamungkas",
 };
 
@@ -141,6 +140,23 @@ export const currentRole = {
   ],
 };
 
+/** The business side of "Recent on Me": Kelana, run with a partner. */
+export const business = {
+  name: "Kelana Photobooth",
+  logo: img("logo-kelana"),
+  kind: "Business development",
+  meta: "Running the business with my partner · Building its photo booth system",
+  color: "#6e1f2c",
+  photo: img("kelana-1"),
+  points: [
+    "Building our own photo booth system so we no longer pay a per-event app subscription",
+    "Integrated the camera and the printer, then delivered photos to guests through a web flow",
+    "Keep reworking the booth flow so each session is easier for guests and takes less time",
+  ],
+  stack: ["React", "Electron", "Node.js", "Cloudflare R2"],
+  link: { label: "See the project", href: "/projects#kelana-photo-booth" },
+};
+
 export const experience: {
   period: string;
   title: string;
@@ -245,6 +261,8 @@ export const projects: {
   stack: { name: string; role: string }[];
   /** Repository on GitHub, when public. */
   repo?: string;
+  /** Teaser or demo video. */
+  video?: string;
   problem?: { title: string; points: string[] };
   solution?: { title: string; points: string[] };
   shots: Shot[];
@@ -354,6 +372,7 @@ export const projects: {
       { name: "Google Maps API", role: "Mapping" },
     ],
     repo: "https://github.com/AlcodeFun/JanLink",
+    video: "https://drive.google.com/file/d/1MUNcaF-ZA82LohlZJoo0C22aNBuW504g/view?usp=sharing",
     problem: {
       title: "Buyers can't find roaming street-food vendors",
       points: [
@@ -479,12 +498,12 @@ export const visualDesign: {
 ];
 
 export const certifications = [
-  { src: img("cert-se"), title: "Software Engineer", meta: "BNSP · 2025–2028", kind: "certificate" },
-  { src: img("cert-db"), title: "Database Programmer", meta: "BNSP · 2026–2029", kind: "certificate" },
+  { src: img("cert-se"), title: "Software Engineer", meta: "BNSP · 2025–2028", kind: "certificate", href: "https://drive.google.com/file/d/1O80vF21rP9Mo_-tkzWDBTr93uRv-FdMv/view?usp=sharing" },
+  { src: img("cert-db"), title: "Database Programmer", meta: "BNSP · 2026–2029", kind: "certificate", href: "https://drive.google.com/file/d/1c6WIFxfKA6HTX5eUyvR8NQLZpqU6Tz4F/view?usp=sharing" },
 ];
 
 export const achievements = [
-  { src: img("award-olivia"), title: "1st Place, Business Plan", meta: "OLIVIA 2022", kind: "award" },
-  { src: img("award-reels"), title: "2nd Place, Reels Competition", meta: "Politeknik Elbajo Commodus · 2023", kind: "award" },
-  { src: img("award-pln"), title: "Favorite Winner, Short Video", meta: "PLN · 2023", kind: "award" },
+  { src: img("award-olivia"), title: "1st Place, Business Plan", meta: "OLIVIA 2022", kind: "award", href: "https://drive.google.com/file/d/1GLQJowMN7BIGdMxdKZGX-qh1V6BZkNIL/view?usp=sharing" },
+  { src: img("award-reels"), title: "2nd Place, Reels Competition", meta: "Politeknik Elbajo Commodus · 2023", kind: "award", href: "https://drive.google.com/file/d/1K1HWNcwzQpJJQrMup_fqjDN3QXHjw48E/view?usp=sharing" },
+  { src: img("award-pln"), title: "Favorite Winner, Short Video", meta: "PLN · 2023", kind: "award", href: "https://drive.google.com/file/d/1qdyWIBxdBm01ebSOhXs2gAxHwTi8kO7r/view?usp=sharing" },
 ];
