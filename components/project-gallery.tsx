@@ -21,6 +21,7 @@ export function ProjectGallery({
   grid = "grid-cols-2 sm:grid-cols-3",
   aspect = "aspect-[4/3]",
   fit = "cover",
+  frameColor,
 }: {
   images: GalleryImage[];
   /** Pass null when the surrounding section already has a heading. */
@@ -28,6 +29,11 @@ export function ProjectGallery({
   grid?: string;
   aspect?: string;
   fit?: "cover" | "contain";
+  /**
+   * Tint for the tile frames. The frames are mixed mostly with white, so they
+   * stay light in both themes; without it they follow the page surface.
+   */
+  frameColor?: string;
 }) {
   const [active, setActive] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -80,7 +86,17 @@ export function ProjectGallery({
               type="button"
               onClick={() => setActive(i)}
               aria-label={`Open image ${i + 1} of ${images.length}: ${image.alt}`}
-              className="group block w-full cursor-zoom-in overflow-hidden rounded-xl border border-line bg-surface p-1.5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              style={
+                frameColor
+                  ? {
+                      backgroundColor: `color-mix(in srgb, ${frameColor} 12%, white)`,
+                      borderColor: `color-mix(in srgb, ${frameColor} 30%, white)`,
+                    }
+                  : undefined
+              }
+              className={`group block w-full cursor-zoom-in overflow-hidden rounded-xl border p-1.5 text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
+                frameColor ? "" : "border-line bg-surface"
+              }`}
             >
               <div className={`relative w-full overflow-hidden rounded-lg bg-soft ${aspect}`}>
                 <Image
@@ -93,7 +109,12 @@ export function ProjectGallery({
                 />
               </div>
               {image.caption ? (
-                <p className="px-1.5 pb-1 pt-2 text-sm text-muted">{image.caption}</p>
+                <p
+                  style={frameColor ? { color: `color-mix(in srgb, ${frameColor} 75%, black)` } : undefined}
+                  className={`px-1.5 pb-1 pt-2 text-sm ${frameColor ? "font-semibold" : "text-muted"}`}
+                >
+                  {image.caption}
+                </p>
               ) : null}
             </button>
           </li>

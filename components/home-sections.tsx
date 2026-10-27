@@ -657,13 +657,17 @@ export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1"
               {project.problem && project.solution ? (
                 <div className="grid gap-4 md:grid-cols-2">
                   {[
-                    { label: "The problem", tone: "text-[#a37700] dark:text-yellow", ...project.problem },
+                    { label: "The problem", tone: "text-[#a37700]", ...project.problem },
                     { label: "The solution", tone: "text-sky", ...project.solution },
                   ].map((box) => (
-                    <div key={box.label} className="rounded-xl bg-surface p-6 shadow-sm ring-1 ring-line">
+                    <div
+                      key={box.label}
+                      style={{ backgroundColor: `color-mix(in srgb, ${project.color} 12%, white)` }}
+                      className="rounded-xl p-6 text-navy shadow-sm"
+                    >
                       <Eyebrow className={box.tone}>{box.label}</Eyebrow>
-                      <p className="mt-2 font-display text-lg font-bold text-heading">{box.title}</p>
-                      <ul className="mt-3 space-y-2 text-muted">
+                      <p className="mt-2 font-display text-lg font-bold">{box.title}</p>
+                      <ul className="mt-3 space-y-2 text-[#3d4566]">
                         {box.points.map((point) => (
                           <li key={point} className="flex gap-3">
                             <span aria-hidden className="text-sky">•</span>
@@ -678,6 +682,7 @@ export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1"
               <ProjectGallery
                 images={project.shots}
                 heading={null}
+                frameColor={project.color}
                 grid={
                   project.slug === "foodish-app"
                     ? "grid-cols-3 sm:grid-cols-6"
