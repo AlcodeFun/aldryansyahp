@@ -26,9 +26,7 @@ import { parseBlocks } from "@/lib/blocks";
 import { parseGallery } from "@/lib/gallery";
 import * as site from "@/lib/cms/site";
 import * as home from "@/lib/cms/home";
-import * as journey from "@/lib/cms/journey";
 import * as projects from "@/lib/cms/projects";
-import * as notes from "@/lib/cms/notes";
 import * as pages from "@/lib/cms/pages";
 import type { HomeSectionKind, PageSettings, TechGroup } from "@/lib/cms/types";
 
@@ -44,11 +42,6 @@ function str(data: FormData, key: string): string {
 function raw(data: FormData, key: string): string {
   const value = data.get(key);
   return typeof value === "string" ? value : "";
-}
-
-function num(data: FormData, key: string, fallback = 0): number {
-  const parsed = Number(str(data, key));
-  return Number.isFinite(parsed) ? parsed : fallback;
 }
 
 function bool(data: FormData, key: string): boolean {
@@ -294,54 +287,6 @@ export async function moveTechItem(data: FormData): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
-// journey
-// ---------------------------------------------------------------------------
-
-function journeyInput(data: FormData): journey.JourneyInput {
-  const title = raw(data, "title");
-  return {
-    slug: resolveSlug(data, title),
-    title,
-    date: str(data, "date") || new Date().toISOString().slice(0, 10),
-    excerpt: raw(data, "excerpt"),
-    readMinutes: Math.max(0, num(data, "readMinutes", 1)),
-    content: parseBlocks(raw(data, "content")),
-    published: bool(data, "published"),
-  };
-}
-
-export async function saveJourneyEntry(data: FormData): Promise<void> {
-  await assertAdmin();
-  const id = str(data, "id");
-  const values = journeyInput(data);
-  if (id) {
-    await journey.updateJourneyEntry(id, values);
-  } else {
-    const newId = await journey.createJourneyEntry(values);
-    refresh([TAGS.journey, `${TAGS.journey}:${values.slug}`]);
-    redirect(`/admin/journey/${newId}`);
-  }
-  refresh([TAGS.journey, `${TAGS.journey}:${values.slug}`]);
-  redirect("/admin/journey?saved=1");
-}
-
-export async function deleteJourneyEntry(data: FormData): Promise<void> {
-  await assertAdmin();
-  const id = str(data, "id");
-  if (id) await journey.deleteJourneyEntry(id);
-  refresh([TAGS.journey]);
-  redirect("/admin/journey");
-}
-
-export async function toggleJourneyPublished(data: FormData): Promise<void> {
-  await assertAdmin();
-  const id = str(data, "id");
-  if (id) await journey.toggleJourneyPublished(id, bool(data, "published"));
-  refresh([TAGS.journey]);
-  redirect("/admin/journey");
-}
-
-// ---------------------------------------------------------------------------
 // projects
 // ---------------------------------------------------------------------------
 
@@ -390,52 +335,6 @@ export async function toggleProjectPublished(data: FormData): Promise<void> {
   if (id) await projects.toggleProjectPublished(id, bool(data, "published"));
   refresh([TAGS.projects]);
   redirect("/admin/projects");
-}
-
-// ---------------------------------------------------------------------------
-// random notes
-// ---------------------------------------------------------------------------
-
-function noteInput(data: FormData): notes.NoteInput {
-  const title = raw(data, "title");
-  return {
-    slug: resolveSlug(data, title),
-    title,
-    date: str(data, "date") || new Date().toISOString().slice(0, 10),
-    text: raw(data, "text"),
-    content: parseBlocks(raw(data, "content")),
-    published: bool(data, "published"),
-  };
-}
-
-export async function saveRandomNote(data: FormData): Promise<void> {
-  await assertAdmin();
-  const id = str(data, "id");
-  const values = noteInput(data);
-  if (id) {
-    await notes.updateRandomNote(id, values);
-    refresh([TAGS.notes, `${TAGS.notes}:${values.slug}`]);
-    redirect("/admin/notes?saved=1");
-  }
-  const newId = await notes.createRandomNote(values);
-  refresh([TAGS.notes, `${TAGS.notes}:${values.slug}`]);
-  redirect(`/admin/notes/${newId}`);
-}
-
-export async function deleteRandomNote(data: FormData): Promise<void> {
-  await assertAdmin();
-  const id = str(data, "id");
-  if (id) await notes.deleteRandomNote(id);
-  refresh([TAGS.notes]);
-  redirect("/admin/notes");
-}
-
-export async function toggleRandomNotePublished(data: FormData): Promise<void> {
-  await assertAdmin();
-  const id = str(data, "id");
-  if (id) await notes.toggleRandomNotePublished(id, bool(data, "published"));
-  refresh([TAGS.notes]);
-  redirect("/admin/notes");
 }
 
 // ---------------------------------------------------------------------------

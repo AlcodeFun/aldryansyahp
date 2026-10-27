@@ -23,8 +23,6 @@ export const siteSettings = {
 export const navItems = [
   { href: "/", label: "Home" },
   { href: "/projects", label: "Projects" },
-  { href: "/journey", label: "Journey" },
-  { href: "/random", label: "Random" },
 ];
 
 export const homeHero = {

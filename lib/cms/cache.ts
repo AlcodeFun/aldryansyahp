@@ -10,9 +10,7 @@ import { unstable_cache } from "next/cache";
 export const TAGS = {
   site: "site",
   home: "home",
-  journey: "journey",
   projects: "projects",
-  notes: "random",
   pages: "pages",
 } as const;
 

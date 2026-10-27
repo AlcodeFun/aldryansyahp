@@ -3,8 +3,13 @@ import { getSite, getNav } from "@/lib/cms/site";
 import { NavLinks } from "./nav-links";
 import { ThemeToggle } from "./theme-toggle";
 
+// Journey and Random were removed; hide their links even if the nav table
+// still carries them.
+const REMOVED = ["/journey", "/random"];
+
 export async function Header() {
-  const [site, nav] = await Promise.all([getSite(), getNav()]);
+  const [site, allNav] = await Promise.all([getSite(), getNav()]);
+  const nav = allNav.filter((item) => !REMOVED.some((path) => item.href.startsWith(path)));
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-surface/90 backdrop-blur">

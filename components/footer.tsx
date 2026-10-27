@@ -15,8 +15,8 @@ export async function Footer() {
           {site.role} Portfolio {new Date().getFullYear()}
         </p>
         <p className="flex gap-4 font-semibold">
-          <Link href={strings["home.random_notes_href"] ?? "/random"} className="text-muted hover:text-heading hover:underline">
-            {strings["footer.random_notes_link"] ?? "Notes"}
+          <Link href="/projects" className="text-muted hover:text-heading hover:underline">
+            Projects
           </Link>
           <a href={`mailto:${site.email}`} className="text-muted hover:text-heading hover:underline">
             {strings["footer.say_hello_link"] ?? "Email"}

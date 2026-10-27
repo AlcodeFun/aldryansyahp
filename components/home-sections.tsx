@@ -477,7 +477,7 @@ export function OtherExperience() {
 
 /* ------------------------------------------------------------ Projects */
 
-export function Projects() {
+export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1" | "h2" }) {
   return (
     <section id="projects" aria-labelledby="projects-title" className="scroll-mt-20">
       <div className="relative overflow-hidden bg-navy py-20 text-white sm:py-28">
@@ -488,9 +488,9 @@ export function Projects() {
         </div>
         <Container>
           <span aria-hidden className="block h-1.5 w-20 bg-yellow" />
-          <h2 id="projects-title" className="mt-8 text-4xl font-extrabold tracking-tight sm:text-5xl">
+          <Heading id="projects-title" className="mt-8 text-4xl font-extrabold tracking-tight sm:text-5xl">
             Selected Projects
-          </h2>
+          </Heading>
           <p className="mt-4 text-lg text-white/80">Software projects, 2023–2026</p>
         </Container>
       </div>

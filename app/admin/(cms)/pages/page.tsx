@@ -12,7 +12,6 @@ import { PageHeader } from "@/components/admin/page-header";
 
 const TOKENS = [
   { token: "{date}", meaning: "formatted entry date" },
-  { token: "{readMinutes}", meaning: "journey read time" },
   { token: "{title}", meaning: "entry title" },
   { token: "{year}", meaning: "project year" },
   { token: "{role}", meaning: "project role" },

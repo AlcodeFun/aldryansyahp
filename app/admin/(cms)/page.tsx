@@ -3,9 +3,7 @@ import sql from "@/lib/db";
 import { Card } from "@/components/admin/ui";
 
 const COUNTS = [
-  { table: "journey_entries", label: "Journey entries", href: "/admin/journey" },
   { table: "projects", label: "Projects", href: "/admin/projects" },
-  { table: "random_notes", label: "Random notes", href: "/admin/notes" },
   { table: "education", label: "Education rows", href: "/admin/home" },
   { table: "tech_items", label: "Tech pills", href: "/admin/home" },
   { table: "nav_items", label: "Nav links", href: "/admin/site" },
