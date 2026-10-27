@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ProjectGallery } from "@/components/project-gallery";
 import { Container, SectionHeading, accentBg, accentText } from "@/components/page";
 import {
@@ -12,6 +11,7 @@ import {
   otherExperience,
   profile,
   projects,
+  techLogo,
   techStack,
   visualDesign,
 } from "@/lib/portfolio";
@@ -49,18 +49,20 @@ function SectionShell({
   accent,
   children,
   className = "",
+  headingLevel = "h2",
 }: {
   id: string;
   title: string;
   accent?: Parameters<typeof SectionHeading>[0]["accent"];
   children: React.ReactNode;
   className?: string;
+  headingLevel?: "h1" | "h2";
 }) {
   return (
     <section id={id} aria-labelledby={`${id}-title`} className={`scroll-mt-20 py-16 sm:py-24 ${className}`}>
       <Container>
         <div id={`${id}-title`}>
-          <SectionHeading title={title} accent={accent} />
+          <SectionHeading title={title} accent={accent} as={headingLevel} />
         </div>
         <div className="mt-10 sm:mt-12">{children}</div>
       </Container>
@@ -156,24 +158,27 @@ export function Hero({ rhyme }: { rhyme: { line: string; greeting: string } }) {
           </ul>
         </div>
 
-        <div className="relative mx-auto flex flex-col items-center gap-8">
-          <span aria-hidden className="absolute -left-4 top-2 rounded-full bg-yellow px-3 py-1 font-mono text-xs font-bold text-navy">
-            &lt;/&gt;
-          </span>
-          <div className="rounded-full border-4 border-yellow p-2">
+        {/* Portrait card: a yellow slab offset behind the photo, with the code
+            window overlapping its lower-left corner. */}
+        <div className="relative mx-auto mb-6 mr-6 w-60 sm:w-72 lg:mb-16">
+          <div aria-hidden className="absolute inset-0 translate-x-5 translate-y-5 rounded-3xl bg-yellow" />
+          <div className="relative overflow-hidden rounded-3xl bg-white shadow-2xl ring-1 ring-white/20">
             <Image
               src={profile.photo}
               alt={profile.name}
-              width={240}
-              height={240}
+              width={488}
+              height={488}
               priority
-              className="h-52 w-52 rounded-full bg-white object-cover sm:h-60 sm:w-60"
+              className="aspect-[4/5] w-full object-cover object-top"
             />
           </div>
-          <span aria-hidden className="absolute -right-4 top-52 rounded-full bg-[#4cc3f7] px-3 py-1 font-mono text-xs font-bold text-navy sm:top-60">
+          <span aria-hidden className="absolute -left-5 top-6 rounded-lg bg-yellow px-3 py-1 font-mono text-xs font-bold text-navy shadow-md">
+            &lt;/&gt;
+          </span>
+          <span aria-hidden className="absolute -right-8 top-1/3 rounded-lg bg-[#4cc3f7] px-3 py-1 font-mono text-xs font-bold text-navy shadow-md">
             {"{ }"}
           </span>
-          <div className="hidden sm:block">
+          <div className="absolute -bottom-16 -left-24 hidden scale-90 lg:block">
             <CodeWindow />
           </div>
         </div>
@@ -310,11 +315,29 @@ export function TechStack() {
         {techStack.map((group) => (
           <li key={group.label} className="border-t-[6px] border-sky bg-surface p-6 shadow-sm ring-1 ring-line">
             <Eyebrow className="text-[#4a55a2] dark:text-[#a9b4ff]">{group.label}</Eyebrow>
-            <p className="mt-3 text-lg leading-snug">{group.items}</p>
+            <TechLogos names={group.logos} className="mt-4" />
+            <p className="mt-4 text-lg leading-snug">{group.items}</p>
           </li>
         ))}
       </ul>
     </SectionShell>
+  );
+}
+
+/** A row of technology logos on white tiles, so dark logos read in dark mode too. */
+function TechLogos({ names, className = "" }: { names: string[]; className?: string }) {
+  return (
+    <ul className={`flex flex-wrap gap-2 ${className}`}>
+      {names.map((name) => {
+        const logo = techLogo(name);
+        return logo ? (
+          <li key={name} title={name} className="flex h-11 w-11 items-center justify-center rounded-lg bg-white p-2 ring-1 ring-line">
+            {/* eslint-disable-next-line @next/next/no-img-element -- small static SVGs */}
+            <img src={logo} alt={name} width={28} height={28} className="h-7 w-7 object-contain" />
+          </li>
+        ) : null;
+      })}
+    </ul>
   );
 }
 
@@ -366,45 +389,45 @@ export function CurrentRole() {
 
 /* ---------------------------------------------------------- Experience */
 
-export function Experience() {
+/** Each role's card is filled with its company colour. */
+const JOB_THEME: Record<string, { card: string; accent: string; muted: string; dot: string }> = {
+  plum: { card: "bg-[#5b1f86] text-white", accent: "text-[#f3c4ff]", muted: "text-white/75", dot: "bg-[#f3c4ff]" },
+  yellow: { card: "bg-[#f6c21c] text-navy", accent: "text-[#7a4b00]", muted: "text-navy/70", dot: "bg-navy" },
+  crimson: { card: "bg-[#b8222b] text-white", accent: "text-[#ffd2d2]", muted: "text-white/75", dot: "bg-white" },
+  forest: { card: "bg-forest text-white", accent: "text-yellow", muted: "text-white/75", dot: "bg-yellow" },
+};
+
+export function Experience({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
   return (
-    <SectionShell id="experience" title="Experience" accent="teal">
+    <SectionShell id="experience" title="Experience" accent="teal" headingLevel={headingLevel}>
       <ol className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-        {experience.map((job, i) => {
-          const last = i === experience.length - 1;
+        {experience.map((job) => {
+          const theme = JOB_THEME[job.accent] ?? JOB_THEME.forest;
           return (
             <li key={job.company} className="flex flex-col">
               <div className="flex items-center justify-between gap-3">
-                <p className={`text-sm font-bold uppercase tracking-wide ${accentText[job.accent]}`}>
-                  {job.period}
-                </p>
-                <Image src={job.logo} alt={`${job.company} logo`} width={36} height={36} className="h-9 w-9 rounded-md object-contain" />
+                <p className="text-sm font-bold uppercase tracking-wide text-heading">{job.period}</p>
+                <Image src={job.logo} alt={`${job.company} logo`} width={36} height={36} className="h-9 w-9 rounded-md bg-white object-contain" />
               </div>
               <div className="relative my-4 flex items-center">
                 <span className={`relative z-10 h-4 w-4 rounded-full ring-4 ring-bg ${accentBg[job.accent]}`} />
                 <span aria-hidden className="h-0.5 flex-1 bg-line" />
               </div>
-              <article
-                className={`flex flex-1 flex-col border-t-[6px] p-6 shadow-sm ${
-                  last ? "border-[#5fd08f] bg-forest text-white" : `bg-surface ring-1 ring-line ${borderFor(job.accent)}`
-                }`}
-              >
-                <h3 className={`text-xl font-bold ${last ? "" : "text-heading"}`}>{job.title}</h3>
-                <p className={`mt-1 font-display font-bold ${last ? "text-yellow" : accentText[job.accent]}`}>
-                  {job.company}
-                </p>
-                <p className={`text-sm ${last ? "text-white/80" : "text-muted"}`}>{job.meta}</p>
-                <ul className={`mt-5 space-y-3 border-t pt-5 ${last ? "border-white/20" : "border-line"}`}>
+              <article className={`flex flex-1 flex-col rounded-xl p-6 shadow-md ${theme.card}`}>
+                <h3 className="text-xl font-bold">{job.title}</h3>
+                <p className={`mt-1 font-display font-bold ${theme.accent}`}>{job.company}</p>
+                <p className={`text-sm ${theme.muted}`}>{job.meta}</p>
+                <ul className="mt-5 space-y-3 border-t border-current/20 pt-5">
                   {job.points.map((point) => (
                     <li key={point} className="flex gap-3">
-                      <Square className={last ? "bg-yellow" : accentBg[job.accent]} />
+                      <Square className={theme.dot} />
                       <span>{point}</span>
                     </li>
                   ))}
                 </ul>
                 <div className="mt-6 lg:mt-auto lg:pt-6">
                   {job.photo ? (
-                    <figure className="overflow-hidden rounded-lg bg-soft">
+                    <figure className="overflow-hidden rounded-lg bg-black/15">
                       <Image
                         src={job.photo.src}
                         alt={job.photo.caption}
@@ -413,14 +436,14 @@ export function Experience() {
                         className="aspect-[3/2] w-full object-cover"
                       />
                       <figcaption className="px-4 py-3 text-center">
-                        <span className="block font-bold text-heading">{job.photo.caption}</span>
-                        <span className="text-sm text-muted">{job.photo.sub}</span>
+                        <span className="block font-bold">{job.photo.caption}</span>
+                        <span className={`text-sm ${theme.muted}`}>{job.photo.sub}</span>
                       </figcaption>
                     </figure>
                   ) : job.note ? (
-                    <div className="rounded-lg bg-white/10 px-4 py-6 text-center">
+                    <div className="rounded-lg bg-black/15 px-4 py-6 text-center">
                       <p className="font-display text-lg font-bold">{job.note.title}</p>
-                      <p className="mt-1 text-sm text-white/80">{job.note.text}</p>
+                      <p className={`mt-1 text-sm ${theme.muted}`}>{job.note.text}</p>
                     </div>
                   ) : null}
                 </div>
@@ -431,19 +454,6 @@ export function Experience() {
       </ol>
     </SectionShell>
   );
-}
-
-function borderFor(accent: (typeof experience)[number]["accent"]) {
-  return {
-    navy: "border-navy",
-    coral: "border-coral",
-    teal: "border-teal",
-    forest: "border-forest",
-    plum: "border-plum",
-    crimson: "border-crimson",
-    yellow: "border-yellow",
-    sky: "border-sky",
-  }[accent];
 }
 
 export function OtherExperience() {
@@ -516,20 +526,28 @@ export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1"
 
               <Eyebrow className="mt-8 text-muted">Tech stack</Eyebrow>
               <ul className="mt-3 space-y-3">
-                {project.stack.map((tech) => (
+                {project.stack.map((tech) => {
+                  const logo = techLogo(tech.name);
+                  return (
                   <li key={tech.name} className="flex items-center gap-3">
                     <span
                       aria-hidden
-                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-soft font-display text-sm font-bold ${accentText[project.accent]}`}
+                      className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-white p-2 font-display text-sm font-bold ring-1 ring-line ${accentText[project.accent]}`}
                     >
-                      {tech.name.charAt(0)}
+                      {logo ? (
+                        // eslint-disable-next-line @next/next/no-img-element -- small static SVGs
+                        <img src={logo} alt="" width={26} height={26} className="h-6.5 w-6.5 object-contain" />
+                      ) : (
+                        tech.name.charAt(0)
+                      )}
                     </span>
                     <span>
                       <span className={`block font-display font-bold ${accentText[project.accent]}`}>{tech.name}</span>
                       <span className="text-sm text-muted">{tech.role}</span>
                     </span>
                   </li>
-                ))}
+                  );
+                })}
               </ul>
 
               <div className="mt-8 flex flex-wrap gap-3 lg:mt-auto lg:pt-8">
@@ -542,14 +560,6 @@ export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1"
                   >
                     Source code ↗
                   </a>
-                ) : null}
-                {project.caseStudy ? (
-                  <Link
-                    href={project.caseStudy}
-                    className="inline-flex items-center gap-2 rounded-lg bg-navy px-4 py-2 text-sm font-bold text-white transition-colors hover:bg-navy-2 dark:bg-yellow dark:text-navy"
-                  >
-                    Read the story →
-                  </Link>
                 ) : null}
               </div>
             </div>
@@ -604,9 +614,9 @@ export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1"
 
 /* ------------------------------------------------------- Visual design */
 
-export function VisualDesign() {
+export function VisualDesign({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
   return (
-    <SectionShell id="visual-design" title="Visual Design" accent="crimson">
+    <SectionShell id="visual-design" title="Visual Design" accent="crimson" headingLevel={headingLevel}>
       <div className="space-y-10">
         {visualDesign.map((group, i) => (
           <div key={group.title} className="grid gap-5 lg:grid-cols-[0.6fr_1.4fr]">
@@ -645,13 +655,19 @@ export function VisualDesign() {
 
 /* --------------------------------------------- Certifications & awards */
 
-export function Certifications() {
+export function Certifications({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2" }) {
   const groups = [
     { label: "Certifications", items: certifications },
     { label: "Achievements", items: achievements },
   ];
   return (
-    <SectionShell id="certifications" title="Certifications & Achievements" accent="yellow" className="bg-surface">
+    <SectionShell
+      id="certifications"
+      title="Certifications & Achievements"
+      accent="yellow"
+      className="bg-surface"
+      headingLevel={headingLevel}
+    >
       <div className="grid gap-10 lg:grid-cols-[2fr_3fr]">
         {groups.map((group) => (
           <div key={group.label}>
@@ -679,47 +695,5 @@ export function Certifications() {
         ))}
       </div>
     </SectionShell>
-  );
-}
-
-/* ------------------------------------------------------------- Contact */
-
-export function Contact() {
-  const rows = [
-    { label: "Email", text: profile.email, href: `mailto:${profile.email}` },
-    { label: "Phone", text: profile.phone, href: `tel:${profile.phone.replace(/\s/g, "")}` },
-    { label: "GitHub", text: profile.github.replace(/^https?:\/\//, ""), href: profile.github },
-    { label: "Portfolio", text: profile.website.replace(/^https?:\/\//, ""), href: profile.website },
-    { label: "LinkedIn", text: profile.name, href: profile.linkedin },
-  ];
-  return (
-    <section id="contact" aria-labelledby="contact-title" className="relative scroll-mt-20 overflow-hidden bg-navy py-20 text-white sm:py-28">
-      <Stripes />
-      <Container className="relative grid items-center gap-12 lg:grid-cols-2 lg:pr-40">
-        <div>
-          <h2 id="contact-title" className="text-4xl font-extrabold tracking-tight sm:text-5xl">
-            Contact
-          </h2>
-          <span aria-hidden className="mt-4 block h-1.5 w-20 bg-yellow" />
-          <p className="mt-6 text-lg text-white/85">Thank you for your time.</p>
-        </div>
-        <dl className="space-y-5 bg-navy-2 p-8 sm:p-10">
-          {rows.map((row) => (
-            <div key={row.label}>
-              <dt className="font-display text-sm font-bold uppercase tracking-wide text-yellow">{row.label}</dt>
-              <dd className="mt-1 break-words text-lg">
-                <a
-                  href={row.href}
-                  {...(row.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                  className="underline underline-offset-4 hover:text-yellow"
-                >
-                  {row.text}
-                </a>
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </Container>
-    </section>
   );
 }

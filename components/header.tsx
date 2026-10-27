@@ -1,15 +1,18 @@
 import Link from "next/link";
-import { getSite, getNav } from "@/lib/cms/site";
+import { getSite } from "@/lib/cms/site";
 import { NavLinks } from "./nav-links";
 import { ThemeToggle } from "./theme-toggle";
 
-// Journey and Random were removed; hide their links even if the nav table
-// still carries them.
-const REMOVED = ["/journey", "/random"];
+const NAV = [
+  { id: "home", href: "/", label: "Home" },
+  { id: "experience", href: "/experience", label: "Experience" },
+  { id: "projects", href: "/projects", label: "Projects" },
+  { id: "visual-design", href: "/visual-design", label: "Visual Design" },
+  { id: "achievements", href: "/achievements", label: "Achievements" },
+];
 
 export async function Header() {
-  const [site, allNav] = await Promise.all([getSite(), getNav()]);
-  const nav = allNav.filter((item) => !REMOVED.some((path) => item.href.startsWith(path)));
+  const site = await getSite();
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-surface/90 backdrop-blur">
@@ -23,7 +26,7 @@ export async function Header() {
           {site.username}
         </Link>
         <div className="flex items-center gap-5">
-          <NavLinks items={nav} />
+          <NavLinks items={NAV} />
           <ThemeToggle />
         </div>
       </div>

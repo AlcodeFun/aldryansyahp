@@ -1,18 +1,6 @@
 import { getHome } from "@/lib/cms/home";
 import { getSite } from "@/lib/cms/site";
-import {
-  About,
-  Certifications,
-  Contact,
-  CurrentRole,
-  Education,
-  Experience,
-  Hero,
-  OtherExperience,
-  Projects,
-  TechStack,
-  VisualDesign,
-} from "@/components/home-sections";
+import { About, CurrentRole, Education, Hero, TechStack } from "@/components/home-sections";
 
 export default async function Home() {
   const [{ hero }, site] = await Promise.all([getHome(), getSite()]);
@@ -24,12 +12,6 @@ export default async function Home() {
       <Education />
       <TechStack />
       <CurrentRole />
-      <Experience />
-      <OtherExperience />
-      <Projects />
-      <VisualDesign />
-      <Certifications />
-      <Contact />
     </>
   );
 }

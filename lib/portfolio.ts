@@ -54,16 +54,73 @@ export const education = {
   ],
 } as const;
 
-export const techStack = [
-  { label: "Languages", items: "JavaScript, TypeScript, Go, PHP, Node.js, Python" },
-  { label: "Frontend", items: "Vue.js, React.js, Bootstrap, Electron" },
-  { label: "Backend & APIs", items: "Go Echo, Laravel, Node.js, RESTful and third-party APIs" },
-  { label: "Databases", items: "MySQL, PostgreSQL, MongoDB, Supabase" },
-  { label: "Cloud storage", items: "Cloudflare R2" },
-  { label: "Version control", items: "Git on GitHub, GitLab and Bitbucket" },
-  { label: "Collaboration", items: "Trello, Jira, Figma, Postman" },
-  { label: "Delivery", items: "Agile (Scrum), Waterfall" },
-  { label: "AI-agent assisted dev", items: "Claude, ChatGPT, DeepSeek, Gemini, Opencode" },
+/** Logo files in /public/tech, keyed by the names used in this file. */
+const TECH_LOGOS: Record<string, string> = {
+  JavaScript: "javascript",
+  TypeScript: "typescript",
+  Go: "go",
+  "Go Echo": "go",
+  PHP: "php",
+  "PHP Native": "php",
+  "Node.js": "nodejs",
+  Python: "python",
+  "Vue.js": "vuejs",
+  React: "react",
+  "React.js": "react",
+  Bootstrap: "bootstrap",
+  Electron: "electron",
+  Laravel: "laravel",
+  MySQL: "mysql",
+  PostgreSQL: "postgresql",
+  MongoDB: "mongodb",
+  Supabase: "supabase",
+  "Cloudflare R2": "cloudflare",
+  Git: "git",
+  GitHub: "github",
+  GitLab: "gitlab",
+  Bitbucket: "bitbucket",
+  Trello: "trello",
+  Jira: "jira",
+  Figma: "figma",
+  Postman: "postman",
+  "Agile (Scrum)": "scrum",
+  Claude: "claude",
+  ChatGPT: "chatgpt",
+  DeepSeek: "deepseek",
+  Gemini: "gemini",
+  Android: "android",
+  "Axios · REST API": "axios",
+  "Google Maps API": "googlemaps",
+};
+
+/** Logo path for a technology, or undefined when there is no logo for it. */
+export function techLogo(name: string): string | undefined {
+  const file = TECH_LOGOS[name];
+  return file ? `/tech/${file}.svg` : undefined;
+}
+
+export const techStack: { label: string; logos: string[]; items: string }[] = [
+  {
+    label: "Languages",
+    logos: ["JavaScript", "TypeScript", "Go", "PHP", "Node.js", "Python"],
+    items: "JavaScript, TypeScript, Go, PHP, Node.js, Python",
+  },
+  { label: "Frontend", logos: ["Vue.js", "React", "Bootstrap", "Electron"], items: "Vue.js, React.js, Bootstrap, Electron" },
+  {
+    label: "Backend & APIs",
+    logos: ["Go Echo", "Laravel", "Node.js"],
+    items: "Go Echo, Laravel, Node.js, RESTful and third-party APIs",
+  },
+  { label: "Databases", logos: ["MySQL", "PostgreSQL", "MongoDB", "Supabase"], items: "MySQL, PostgreSQL, MongoDB, Supabase" },
+  { label: "Cloud storage", logos: ["Cloudflare R2"], items: "Cloudflare R2" },
+  { label: "Version control", logos: ["Git", "GitHub", "GitLab", "Bitbucket"], items: "Git on GitHub, GitLab and Bitbucket" },
+  { label: "Collaboration", logos: ["Trello", "Jira", "Figma", "Postman"], items: "Trello, Jira, Figma, Postman" },
+  { label: "Delivery", logos: ["Agile (Scrum)"], items: "Agile (Scrum), Waterfall" },
+  {
+    label: "AI-agent assisted dev",
+    logos: ["Claude", "ChatGPT", "DeepSeek", "Gemini"],
+    items: "Claude, ChatGPT, DeepSeek, Gemini, Opencode",
+  },
 ];
 
 export const currentRole = {
@@ -185,8 +242,6 @@ export const projects: {
   stack: { name: string; role: string }[];
   /** Repository on GitHub, when public. */
   repo?: string;
-  /** The long write-up on /projects, when one exists. */
-  caseStudy?: string;
   problem?: { title: string; points: string[] };
   solution?: { title: string; points: string[] };
   shots: Shot[];
@@ -206,7 +261,6 @@ export const projects: {
       { name: "Cloudflare R2", role: "Photo storage" },
     ],
     repo: "https://github.com/AlcodeFun/photo-booth",
-    caseStudy: "/projects/photo-booth-system",
     shots: [
       shot("kelana-1", "Start screen"),
       shot("kelana-2", "Choose a photo style"),
@@ -230,7 +284,6 @@ export const projects: {
       { name: "MySQL", role: "Database" },
     ],
     repo: "https://github.com/AlcodeFun/lists/okiagaru-gps-tracker",
-    caseStudy: "/projects/okiagaru-gps-land-mapping",
     shots: [
       shot("gps-field-1", "Program team in Cianjur"),
       shot("gps-field-2", "Field survey with farmers"),
@@ -271,7 +324,6 @@ export const projects: {
       { name: "Axios · REST API", role: "API integration" },
     ],
     repo: "https://github.com/AlcodeFun/ms-attendance-fe",
-    caseStudy: "/projects/ms-attendance",
     shots: [
       shot("ms-login", "Login page"),
       shot("ms-dashboard", "Employee dashboard"),
@@ -294,7 +346,6 @@ export const projects: {
       { name: "Google Maps API", role: "Mapping" },
     ],
     repo: "https://github.com/AlcodeFun/JanLink",
-    caseStudy: "/projects/janlink",
     problem: {
       title: "Buyers can't find roaming street-food vendors",
       points: [
@@ -330,7 +381,6 @@ export const projects: {
       { name: "JSONPlaceholder API", role: "Data API" },
     ],
     repo: "https://github.com/AlcodeFun/ChasierWeb-CampSurvivor",
-    caseStudy: "/projects/camp-survivor-cashier",
     shots: [shot("camp-menu", "Menu and cart"), shot("camp-note", "Item quantity and kitchen note")],
   },
   {
@@ -345,7 +395,6 @@ export const projects: {
       { name: "REST API", role: "API integration" },
     ],
     repo: "https://github.com/AlcodeFun/Foodish-OrderApp",
-    caseStudy: "/projects/foodish-order-app",
     shots: [
       shot("foodish-1", "Splash screen"),
       shot("foodish-3", "Login"),

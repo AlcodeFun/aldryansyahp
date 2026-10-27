@@ -1,13 +1,11 @@
 import type { Metadata } from "next";
-import { getPageSettings } from "@/lib/cms/pages";
 import { Projects } from "@/components/home-sections";
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await getPageSettings("projects");
-  return { title: page.seoTitle, description: page.seoDescription };
-}
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "Software projects, 2023–2026.",
+};
 
-// The same project list the home page shows, as its own page.
 export default function ProjectsPage() {
   return <Projects headingLevel="h1" />;
 }
