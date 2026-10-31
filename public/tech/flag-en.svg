@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 30">
+  <!-- Duolingo-style course flag: rounded, light outline, darker bottom lip. -->
+  <defs>
+    <clipPath id="f"><rect x="2" y="2" width="36" height="26" rx="6" /></clipPath>
+  </defs>
+  <g clip-path="url(#f)">
+    <rect x="2" y="2" width="36" height="26" fill="#ffffff" />
+    <g fill="#e23c3c">
+      <rect x="2" y="2" width="36" height="3.7" />
+      <rect x="2" y="9.4" width="36" height="3.7" />
+      <rect x="2" y="16.9" width="36" height="3.7" />
+      <rect x="2" y="24.3" width="36" height="3.7" />
+    </g>
+    <rect x="2" y="2" width="17" height="14.6" fill="#2a4bb5" />
+    <g fill="#ffffff">
+      <circle cx="6" cy="6" r="1.1" /><circle cx="10.5" cy="6" r="1.1" /><circle cx="15" cy="6" r="1.1" />
+      <circle cx="8.2" cy="9.3" r="1.1" /><circle cx="12.7" cy="9.3" r="1.1" />
+      <circle cx="6" cy="12.6" r="1.1" /><circle cx="10.5" cy="12.6" r="1.1" /><circle cx="15" cy="12.6" r="1.1" />
+    </g>
+    <rect x="2" y="24" width="36" height="4" fill="#000000" opacity="0.18" />
+  </g>
+  <rect x="2" y="2" width="36" height="26" rx="6" fill="none" stroke="#e5e5e5" stroke-width="2.5" />
+</svg>
