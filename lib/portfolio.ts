@@ -196,7 +196,7 @@ export const experience: {
     meta: "Jakarta · Internship",
     logo: img("logo-hicolleagues"),
     accent: "yellow",
-    stack: ["Vue.js", "Go Echo"],
+    stack: ["Vue.js", "Go Echo", "PostgreSQL"],
     points: [
       "Shipped 3+ full-stack features in Vue.js and Go",
       "Built 10+ REST endpoints on Go Echo with clean architecture",
@@ -224,7 +224,7 @@ export const experience: {
     meta: "Yogyakarta · Contract",
     logo: img("logo-nutapos"),
     accent: "forest",
-    stack: ["Vue.js", "Laravel", "PostgreSQL"],
+    stack: ["Vue.js", "Laravel"],
     points: [
       "Delivered 15+ production point-of-sale features",
       "Started a design system that cut repetitive work ~20%",
