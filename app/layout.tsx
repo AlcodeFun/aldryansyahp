@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Montserrat, Open_Sans } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { ContactFab } from "@/components/contact-fab";
+import { profile } from "@/lib/portfolio";
 import { getSite } from "@/lib/cms/site";
 import "./globals.css";
 
@@ -54,6 +56,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <ContactFab whatsapp={profile.whatsapp} email={profile.email} />
       </body>
     </html>
   );
