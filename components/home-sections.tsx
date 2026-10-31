@@ -210,10 +210,7 @@ export function About() {
               {about.languages}
             </p>
             <p className="mt-3 flex items-center gap-3 border-t border-line pt-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white p-1.5 ring-1 ring-line">
-                {/* eslint-disable-next-line @next/next/no-img-element -- small static SVG */}
-                <img src={about.englishTest.logo} alt="" width={28} height={28} className="h-7 w-7" />
-              </span>
+              <Image src={about.englishTest.logo} alt="Duolingo" width={40} height={40} className="h-10 w-10 shrink-0 rounded-xl" />
               <span className="text-muted">{about.englishTest.name}</span>
               <span className="ml-auto rounded-full bg-[#58cc02] px-3 py-1 font-display text-sm font-extrabold text-white">
                 {about.englishTest.score}
