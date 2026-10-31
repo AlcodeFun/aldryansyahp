@@ -211,9 +211,14 @@ export function About() {
             </p>
             <p className="mt-3 flex items-center gap-3 border-t border-line pt-3">
               <Image src={about.duolingo.logo} alt="" width={40} height={40} className="h-10 w-10 shrink-0 rounded-xl" />
-              <span className="font-display font-bold text-heading">Duolingo</span>
-              {/* eslint-disable-next-line @next/next/no-img-element -- small static SVG */}
-              <img src={about.duolingo.flag} alt="English" width={40} height={30} className="h-7 w-auto" />
+              <span className="min-w-0">
+                <span className="flex items-center gap-2">
+                  <span className="font-display font-bold text-heading">Duolingo</span>
+                  {/* eslint-disable-next-line @next/next/no-img-element -- small static SVG */}
+                  <img src={about.duolingo.flag} alt="English" width={40} height={30} className="h-6 w-auto" />
+                </span>
+                <span className="block text-sm text-muted">{about.duolingo.level}</span>
+              </span>
               <span className="ml-auto rounded-full bg-[#58cc02] px-3 py-1 font-display text-sm font-extrabold text-white">
                 {about.duolingo.score}
               </span>

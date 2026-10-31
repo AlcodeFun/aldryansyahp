@@ -33,7 +33,12 @@ export const about = {
   ],
   languages: "Indonesian (native) · English (professional)",
   /** English score reached in the Duolingo app. */
-  duolingo: { score: "129", logo: "/tech/duolingo.webp", flag: "/tech/flag-en.svg" },
+  duolingo: {
+    score: "129",
+    level: "Professional Working Proficiency",
+    logo: "/tech/duolingo.webp",
+    flag: "/tech/flag-en.svg",
+  },
   stats: [
     { value: "2 yrs", label: "Experience across four roles, 2022–2026" },
     { value: "15+", label: "Production point-of-sale features at Nutapos", dark: true },
