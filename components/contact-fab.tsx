@@ -57,10 +57,7 @@ export function ContactFab({ whatsapp, email }: { whatsapp: string; email: strin
           className="w-72 overflow-hidden rounded-2xl bg-surface shadow-2xl ring-1 ring-line"
         >
           <div className="flex items-center justify-between bg-navy px-5 py-4 text-white">
-            <div>
-              <p className="font-display font-bold">Reach me</p>
-              <p className="text-sm text-white/75">Pick whichever is easier.</p>
-            </div>
+            <p className="font-display font-bold">Reach me</p>
             <button
               type="button"
               onClick={() => setOpen(false)}
