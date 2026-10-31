@@ -497,6 +497,7 @@ export function Experience({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2"
                     </li>
                   ))}
                 </ul>
+                <TechLogos names={job.stack} className="mt-5" />
                 <div className="mt-6 lg:mt-auto lg:pt-6">
                   {job.photo ? (
                     <figure className="overflow-hidden rounded-lg bg-black/15">

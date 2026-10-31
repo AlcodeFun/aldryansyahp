@@ -57,6 +57,9 @@ export const education = {
 /** Logo files in /public/tech, keyed by the names used in this file. */
 const TECH_LOGOS: Record<string, string> = {
   JavaScript: "javascript",
+  HTML: "html",
+  CSS: "css",
+  CodeIgniter: "codeigniter",
   TypeScript: "typescript",
   Go: "go",
   "Go Echo": "go",
@@ -165,6 +168,8 @@ export const experience: {
   meta: string;
   logo: string;
   accent: Accent;
+  /** Technologies used in the role, shown as logos. */
+  stack: string[];
   points: string[];
   photo?: { src: string; caption: string; sub: string };
   note?: { title: string; text: string };
@@ -176,6 +181,7 @@ export const experience: {
     meta: "Bogor · Internship",
     logo: img("logo-crewnesia"),
     accent: "plum",
+    stack: ["HTML", "CSS", "Bootstrap", "JavaScript"],
     points: [
       "Built and launched the company website in HTML, CSS, Bootstrap and JS",
       "Refined the UI from direct founder feedback",
@@ -189,6 +195,7 @@ export const experience: {
     meta: "Jakarta · Internship",
     logo: img("logo-hicolleagues"),
     accent: "yellow",
+    stack: ["Vue.js", "Go Echo"],
     points: [
       "Shipped 3+ full-stack features in Vue.js and Go",
       "Built 10+ REST endpoints on Go Echo with clean architecture",
@@ -202,6 +209,7 @@ export const experience: {
     meta: "Cianjur · Internship",
     logo: img("logo-okiagaru"),
     accent: "crimson",
+    stack: ["Vue.js", "Laravel", "MySQL"],
     points: [
       "Built a GPS land mapping system in Vue.js and Laravel",
       "Wrote the SRS and SDD covering 20+ requirements",
@@ -215,6 +223,7 @@ export const experience: {
     meta: "Yogyakarta · Contract",
     logo: img("logo-nutapos"),
     accent: "forest",
+    stack: ["Vue.js", "Laravel", "CodeIgniter"],
     points: [
       "Delivered 15+ production point-of-sale features",
       "Started a design system that cut repetitive work ~20%",
