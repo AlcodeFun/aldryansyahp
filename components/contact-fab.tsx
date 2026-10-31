@@ -54,7 +54,7 @@ export function ContactFab({ whatsapp, email }: { whatsapp: string; email: strin
           id="contact-fab-panel"
           role="dialog"
           aria-label="Reach me"
-          className="w-72 overflow-hidden rounded-2xl bg-surface shadow-2xl ring-1 ring-line"
+          className="pop-in w-72 overflow-hidden rounded-2xl bg-surface shadow-2xl ring-1 ring-line"
         >
           <div className="flex items-center justify-between bg-navy px-5 py-4 text-white">
             <p className="font-display font-bold">Reach me</p>

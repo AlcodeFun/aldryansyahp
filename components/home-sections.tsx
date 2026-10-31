@@ -17,6 +17,17 @@ import {
   visualDesign,
 } from "@/lib/portfolio";
 
+/**
+ * Marks an element to rise into view on scroll (see components/scroll-reveal).
+ * `step` staggers items in a grid.
+ */
+function reveal(step = 0) {
+  return {
+    "data-reveal": "",
+    style: { "--reveal-delay": `${Math.min(step, 8) * 80}ms` } as React.CSSProperties,
+  };
+}
+
 /** Renders `**bold**` spans from the content file. */
 function Rich({ text }: { text: string }) {
   return (
@@ -62,7 +73,7 @@ function SectionShell({
   return (
     <section id={id} aria-labelledby={`${id}-title`} className={`scroll-mt-20 py-16 sm:py-24 ${className}`}>
       <Container>
-        <div id={`${id}-title`}>
+        <div id={`${id}-title`} {...reveal()}>
           <SectionHeading title={title} accent={accent} as={headingLevel} />
         </div>
         <div className="mt-10 sm:mt-12">{children}</div>
@@ -126,7 +137,7 @@ export function Hero({ rhyme }: { rhyme: { line: string; greeting: string } }) {
     <section className="relative overflow-hidden bg-navy text-white">
       <Stripes />
       <Container className="relative grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[1fr_auto] lg:pr-40">
-        <div>
+        <div className="hero-rise">
           <Eyebrow className="text-white/80">{profile.eyebrow}</Eyebrow>
           <span aria-hidden className="mt-4 block h-1.5 w-20 bg-yellow" />
           <h1 className="mt-10 max-w-2xl text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-6xl">
@@ -160,8 +171,8 @@ export function Hero({ rhyme }: { rhyme: { line: string; greeting: string } }) {
 
         {/* Portrait card: a yellow slab offset behind the photo, with the code
             window overlapping its lower-left corner. */}
-        <div className="relative mx-auto mb-6 mr-6 w-60 sm:w-72 lg:mb-16">
-          <div aria-hidden className="absolute inset-0 translate-x-5 translate-y-5 rounded-3xl bg-yellow" />
+        <div className="hero-rise relative mx-auto mb-6 mr-6 w-60 [animation-delay:180ms] sm:w-72 lg:mb-16">
+          <div aria-hidden className="hero-slab absolute inset-0 translate-x-5 translate-y-5 rounded-3xl bg-yellow" />
           <div className="relative overflow-hidden rounded-3xl bg-white shadow-2xl ring-1 ring-white/20">
             <Image
               src={profile.photo}
@@ -195,8 +206,8 @@ export function About() {
       <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
         <div className="flex flex-col justify-between gap-8">
           <ul className="space-y-6 text-lg leading-relaxed">
-            {about.points.map((point) => (
-              <li key={point} className="flex gap-4">
+            {about.points.map((point, i) => (
+              <li key={point} className="flex gap-4" {...reveal(i)}>
                 <Square />
                 <span>
                   <Rich text={point} />
@@ -204,7 +215,7 @@ export function About() {
               </li>
             ))}
           </ul>
-          <div className="bg-soft px-5 py-4">
+          <div className="bg-soft px-5 py-4" {...reveal(4)}>
             <p>
               <span className="mr-2 font-display font-bold text-heading">Languages</span>
               {about.languages}
@@ -226,9 +237,10 @@ export function About() {
           </div>
         </div>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          {about.stats.map((stat) => (
+          {about.stats.map((stat, i) => (
             <div
               key={stat.value}
+              {...reveal(i)}
               className={`border-l-8 border-coral p-6 shadow-sm ${
                 stat.dark ? "bg-teal text-white" : "bg-surface ring-1 ring-line"
               }`}
@@ -288,7 +300,7 @@ export function Education() {
   return (
     <SectionShell id="education" title="Education" className="bg-surface">
       <div className="grid gap-10 lg:grid-cols-[1fr_1.1fr]">
-        <div className="flex flex-col bg-[#0b2a6b] p-8 text-white sm:p-10">
+        <div className="flex flex-col bg-[#0b2a6b] p-8 text-white sm:p-10" {...reveal()}>
           <div className="flex items-start justify-between gap-4">
             <div>
               <Eyebrow className="text-yellow">Education</Eyebrow>
@@ -316,8 +328,8 @@ export function Education() {
           </div>
         </div>
         <ul className="flex flex-col justify-center divide-y divide-line border-b border-line">
-          {education.highlights.map((item) => (
-            <li key={item.title} className="flex items-center gap-5 py-6">
+          {education.highlights.map((item, i) => (
+            <li key={item.title} className="flex items-center gap-5 py-6" {...reveal(i + 1)}>
               <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-soft text-heading">
                 <HighlightIcon name={item.icon} />
               </span>
@@ -339,8 +351,8 @@ export function TechStack() {
   return (
     <SectionShell id="tech-stack" title="Tech Stack" accent="sky">
       <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {techStack.map((group) => (
-          <li key={group.label} className="border-t-[6px] border-sky bg-surface p-6 shadow-sm ring-1 ring-line">
+        {techStack.map((group, i) => (
+          <li key={group.label} className="border-t-[6px] border-sky bg-surface p-6 shadow-sm ring-1 ring-line" {...reveal(i % 3)}>
             <Eyebrow className="text-[#4a55a2] dark:text-[#a9b4ff]">{group.label}</Eyebrow>
             <TechLogos names={group.logos} className="mt-4" />
             <p className="mt-4 text-lg leading-snug">{group.items}</p>
@@ -375,7 +387,7 @@ export function RecentOnMe() {
     <SectionShell id="recent" title="Recent on Me" accent="yellow" className="bg-surface">
       <Eyebrow className="mb-5 text-muted">01 · Current role</Eyebrow>
       <div className="grid gap-10 lg:grid-cols-[0.9fr_1.4fr]">
-        <div className="bg-forest p-8 text-white sm:p-10">
+        <div className="bg-forest p-8 text-white sm:p-10" {...reveal()}>
           <div className="flex items-start justify-between gap-4">
             <div>
               <Eyebrow className="text-yellow">Current role</Eyebrow>
@@ -395,7 +407,7 @@ export function RecentOnMe() {
         </div>
         <ol className="divide-y divide-line">
           {currentRole.work.map((item, i) => (
-            <li key={item.title} className="flex gap-5 py-6 first:pt-0">
+            <li key={item.title} className="flex gap-5 py-6 first:pt-0" {...reveal(i + 1)}>
               <span
                 className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-full font-display font-bold ${
                   i === 0 ? "bg-yellow text-navy" : "bg-[#d5efdc] text-forest"
@@ -413,6 +425,7 @@ export function RecentOnMe() {
       </div>
 
       <Eyebrow className="mb-5 mt-16 text-muted">02 · Business with my partner</Eyebrow>
+      <div data-reveal="">
       <div
         style={{ backgroundColor: business.color }}
         className="grid gap-8 overflow-hidden rounded-3xl text-white shadow-lg lg:grid-cols-[1.3fr_1fr]"
@@ -471,6 +484,7 @@ export function RecentOnMe() {
           <div aria-hidden className="absolute inset-0 bg-gradient-to-r from-[#6e1f2c] via-transparent to-transparent lg:via-[#6e1f2c]/10" />
         </div>
       </div>
+      </div>
     </SectionShell>
   );
 }
@@ -489,10 +503,10 @@ export function Experience({ headingLevel = "h2" }: { headingLevel?: "h1" | "h2"
   return (
     <SectionShell id="experience" title="Experience" accent="teal" headingLevel={headingLevel}>
       <ol className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-        {experience.map((job) => {
+        {experience.map((job, i) => {
           const theme = JOB_THEME[job.accent] ?? JOB_THEME.forest;
           return (
-            <li key={job.company} className="flex flex-col">
+            <li key={job.company} className="flex flex-col" {...reveal(i)}>
               <div className="flex items-center justify-between gap-3">
                 <p className="text-sm font-bold uppercase tracking-wide text-heading">{job.period}</p>
                 <Image src={job.logo} alt={`${job.company} logo`} width={36} height={36} className="h-9 w-9 rounded-md bg-white object-contain" />
@@ -549,8 +563,8 @@ export function OtherExperience() {
   return (
     <SectionShell id="other-experience" title="Other Experience" accent="crimson" className="bg-surface">
       <div className="grid gap-6 md:grid-cols-2">
-        {otherExperience.map((item) => (
-          <article key={item.title} className="flex flex-col border-t-[6px] border-crimson shadow-sm ring-1 ring-line">
+        {otherExperience.map((item, i) => (
+          <article key={item.title} className="flex flex-col border-t-[6px] border-crimson shadow-sm ring-1 ring-line" {...reveal(i)}>
             <div className="bg-[#1f3358] px-7 py-6 text-white">
               <Eyebrow className="text-crimson">{item.kind}</Eyebrow>
               <h3 className="mt-2 text-2xl font-bold">{item.title}</h3>
@@ -605,6 +619,7 @@ export function Projects({ headingLevel: Heading = "h2" }: { headingLevel?: "h1"
           {/* Each project sits on a card filled with its own colour, like the
               experience cards. */}
           <div
+            data-reveal=""
             style={{ backgroundColor: project.color }}
             className="grid gap-10 rounded-3xl p-6 text-white shadow-lg sm:p-10 lg:grid-cols-[0.8fr_1.4fr]"
           >
@@ -731,7 +746,7 @@ export function VisualDesign({ headingLevel = "h2" }: { headingLevel?: "h1" | "h
     <SectionShell id="visual-design" title="Visual Design" accent="crimson" headingLevel={headingLevel}>
       <div className="space-y-10">
         {visualDesign.map((group, i) => (
-          <div key={group.title} className="grid gap-5 lg:grid-cols-[0.6fr_1.4fr]">
+          <div key={group.title} className="grid gap-5 lg:grid-cols-[0.6fr_1.4fr]" {...reveal()}>
             <div className={`flex flex-col border-t-[6px] border-coral p-7 text-white ${i === 2 ? "bg-teal" : i === 3 ? "bg-[#21114a]" : "bg-plum"}`}>
               <Eyebrow className="text-coral">
                 Visual design · {String(i + 1).padStart(2, "0")} / {String(visualDesign.length).padStart(2, "0")}
@@ -785,8 +800,8 @@ export function Certifications({ headingLevel = "h2" }: { headingLevel?: "h1" | 
           <div key={group.label}>
             <Eyebrow className="text-[#a37700] dark:text-yellow">{group.label}</Eyebrow>
             <ul className={`mt-4 grid gap-4 ${group.items.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2"}`}>
-              {group.items.map((item) => (
-                <li key={item.title} className="flex flex-col bg-bg p-4 ring-1 ring-line">
+              {group.items.map((item, i) => (
+                <li key={item.title} className="flex flex-col bg-bg p-4 ring-1 ring-line" {...reveal(i)}>
                   <div className="relative aspect-[3/4] w-full overflow-hidden bg-soft">
                     <Image src={item.src} alt={`${item.title} ${item.kind}`} fill sizes="(min-width: 1024px) 20vw, 50vw" className="object-contain" />
                   </div>
@@ -878,7 +893,7 @@ export function Contact() {
     >
       <Stripes />
       <Container className="relative lg:pr-40">
-        <div>
+        <div {...reveal()}>
           <h2 id="contact-title" className="text-4xl font-extrabold tracking-tight sm:text-5xl">
             Contact
           </h2>
@@ -895,7 +910,7 @@ export function Contact() {
           </div>
         </div>
         <ul className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {rows.map((row) => {
+          {rows.map((row, i) => {
             const body = (
               <>
                 <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${row.tint}`}>
@@ -911,7 +926,7 @@ export function Contact() {
             );
             const box = "flex items-center gap-4 rounded-2xl bg-navy-2/60 p-4 ring-1 ring-white/10";
             return (
-              <li key={row.label}>
+              <li key={row.label} {...reveal(i)}>
                 {row.href ? (
                   <a
                     href={row.href}

@@ -3,6 +3,7 @@ import { Montserrat, Open_Sans } from "next/font/google";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { ContactFab } from "@/components/contact-fab";
+import { ScrollReveal } from "@/components/scroll-reveal";
 import { profile } from "@/lib/portfolio";
 import { getSite } from "@/lib/cms/site";
 import "./globals.css";
@@ -31,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // Saved choice wins; otherwise follow the OS.
 function themeScript() {
-  return `(function(){try{var s=localStorage.getItem("theme");var d=s?s==="dark":matchMedia("(prefers-color-scheme: dark)").matches;var r=document.documentElement;r.classList.toggle("dark",d);r.style.colorScheme=d?"dark":"light";}catch(e){}})();`;
+  return `(function(){try{var s=localStorage.getItem("theme");var d=s?s==="dark":matchMedia("(prefers-color-scheme: dark)").matches;var r=document.documentElement;r.classList.add("js");r.classList.toggle("dark",d);r.style.colorScheme=d?"dark":"light";}catch(e){}})();`;
 }
 
 export default function RootLayout({
@@ -57,6 +58,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <ContactFab whatsapp={profile.whatsapp} email={profile.email} />
+        <ScrollReveal />
       </body>
     </html>
   );

@@ -61,6 +61,9 @@ body {
   color: var(--ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
 }
 
 h1,
@@ -79,6 +82,81 @@ h3 {
   outline-offset: 2px;
 }
 
+/* ---- Motion ------------------------------------------------------------ */
+
+:root {
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* Each page fades up on navigation (app/template.tsx). */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.page-enter {
+  animation: page-enter 0.5s var(--ease-out) both;
+}
+
+/* Hero copy and portrait rise in on load; the yellow slab slides in late. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.hero-rise {
+  animation: hero-rise 0.8s var(--ease-out) both;
+}
+@keyframes hero-slab {
+  from {
+    opacity: 0;
+    translate: 0 0;
+  }
+}
+.hero-slab {
+  animation: hero-slab 0.7s var(--ease-out) 0.5s both;
+}
+
+/* Scroll reveal (components/scroll-reveal.tsx). Only hidden once JS runs. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Reach me panel. */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.pop-in {
+  transform-origin: bottom right;
+  animation: pop-in 0.2s ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -87,5 +165,10 @@ h3 {
   *::before,
   *::after {
     transition: none !important;
+    animation: none !important;
+  }
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
   }
 }
