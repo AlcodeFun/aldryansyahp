@@ -59,7 +59,6 @@ const TECH_LOGOS: Record<string, string> = {
   JavaScript: "javascript",
   HTML: "html",
   CSS: "css",
-  CodeIgniter: "codeigniter",
   TypeScript: "typescript",
   Go: "go",
   "Go Echo": "go",
@@ -223,7 +222,7 @@ export const experience: {
     meta: "Yogyakarta · Contract",
     logo: img("logo-nutapos"),
     accent: "forest",
-    stack: ["Vue.js", "Laravel", "CodeIgniter"],
+    stack: ["Vue.js", "Laravel"],
     points: [
       "Delivered 15+ production point-of-sale features",
       "Started a design system that cut repetitive work ~20%",
