@@ -17,6 +17,8 @@ export const profile = {
   location: "Cirebon, West Java",
   email: "aldryansyahp@gmail.com",
   phone: "+62 895 608 837 548",
+  /** wa.me wants the number as digits only, with the country code. */
+  whatsapp: "https://wa.me/62895608837548",
   github: "https://github.com/AlcodeFun",
   linkedin: "https://linkedin.com/in/muhammadaldryansyahpamungkas",
 };
@@ -222,7 +224,7 @@ export const experience: {
     meta: "Yogyakarta · Contract",
     logo: img("logo-nutapos"),
     accent: "forest",
-    stack: ["Vue.js", "Laravel"],
+    stack: ["Vue.js", "Laravel", "PostgreSQL"],
     points: [
       "Delivered 15+ production point-of-sale features",
       "Started a design system that cut repetitive work ~20%",
