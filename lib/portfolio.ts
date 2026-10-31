@@ -33,7 +33,6 @@ export const about = {
   ],
   languages: "Indonesian (native) · English (professional)",
   englishTest: {
-    name: "Duolingo English Test",
     score: "129",
     level: "Professional Working Proficiency",
     logo: "/tech/duolingo.webp",
