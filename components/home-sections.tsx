@@ -211,7 +211,10 @@ export function About() {
             </p>
             <p className="mt-3 flex items-center gap-3 border-t border-line pt-3">
               <Image src={about.englishTest.logo} alt="Duolingo" width={40} height={40} className="h-10 w-10 shrink-0 rounded-xl" />
-              <span className="text-muted">{about.englishTest.name}</span>
+              <span className="min-w-0">
+                <span className="block text-muted">{about.englishTest.name}</span>
+                <span className="block text-sm font-semibold text-heading">{about.englishTest.level}</span>
+              </span>
               <span className="ml-auto rounded-full bg-[#58cc02] px-3 py-1 font-display text-sm font-extrabold text-white">
                 {about.englishTest.score}
               </span>

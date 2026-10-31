@@ -32,7 +32,12 @@ export const about = {
     "Works with product, QA and engineering teams from requirements through release",
   ],
   languages: "Indonesian (native) · English (professional)",
-  englishTest: { name: "Duolingo English Test", score: "129", logo: "/tech/duolingo.webp" },
+  englishTest: {
+    name: "Duolingo English Test",
+    score: "129",
+    level: "Professional Working Proficiency",
+    logo: "/tech/duolingo.webp",
+  },
   stats: [
     { value: "2 yrs", label: "Experience across four roles, 2022–2026" },
     { value: "15+", label: "Production point-of-sale features at Nutapos", dark: true },
